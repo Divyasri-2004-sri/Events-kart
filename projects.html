@@ -357,11 +357,18 @@
       <ul class="ek-links" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="projects.html" class="nav-active">Projects</a></li>
+        <li class="has-dropdown">
+          <a href="projects.html" class="nav-active">Projects <span class="chevron">&#9660;</span></a>
+          <ul class="ek-dropdown">
+            <li><a href="projects.html"><i class="fas fa-folder-open"></i> Our Projects</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
+            <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+          </ul>
+        </li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">&#8594;</span></a>
     <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -370,8 +377,11 @@
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="projects.html" class="nav-active">Projects</a>
+    <a href="projects.html" class="ek-sub-item"><i class="fas fa-folder-open"></i> &nbsp;Our Projects</a>
+    <a href="upcoming-events.html" class="ek-sub-item"><i class="fas fa-calendar-alt"></i> &nbsp;Upcoming Events</a>
+    <a href="gallery.html" class="ek-sub-item"><i class="fas fa-images"></i> &nbsp;Gallery</a>
     <a href="contact.html">Contact</a>
-    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us &#8594;</a>
   </div>
 </header>
 <!-- ===== END NAV ===== -->
