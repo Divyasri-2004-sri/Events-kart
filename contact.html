@@ -9,53 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
-  <!-- ===== NAV STYLES ===== -->
-  <style id="ek-nav-styles">
-    :root {
-      --logo-green:#2d5a27; --logo-green-lt:#3d7a35; --logo-green-dk:#1e3d1b;
-      --nav-white:#ffffff; --nav-text:#1e1e1e; --nav-text-muted:#555555;
-    }
-    .ek-header *{box-sizing:border-box;margin:0;padding:0}
-    .ek-header a{text-decoration:none;color:inherit}
-    .ek-header ul{list-style:none}
-    .ek-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(45,90,39,0.08);transition:box-shadow .3s ease,background .3s ease}
-    .ek-header.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.08);background:rgba(255,255,255,0.99)}
-    .ek-nav{max-width:1300px;margin:0 auto;padding:0 6%;height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .ek-logo{display:flex;align-items:center;flex-shrink:0}
-    .ek-logo img{height:46px;width:auto;display:block;transition:transform .3s ease}
-    .ek-logo:hover img{transform:scale(1.04)}
-    .ek-links{display:flex;align-items:center;gap:38px;flex:1;justify-content:center}
-    .ek-links a{font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:600;color:var(--nav-text);position:relative;padding-bottom:4px;letter-spacing:.2px;transition:color .25s ease;white-space:nowrap}
-    .ek-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--logo-green);border-radius:2px;transition:width .3s cubic-bezier(.4,0,.2,1)}
-    .ek-links a:hover{color:var(--logo-green)}
-    .ek-links a:hover::after{width:100%}
-    .ek-links a.nav-active{color:var(--logo-green)}
-    .ek-links a.nav-active::after{width:100%}
-    .ek-cta{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:var(--logo-green);color:var(--nav-white)!important;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:600;border-radius:6px;letter-spacing:.4px;flex-shrink:0;border:2px solid transparent;transition:background .28s ease,transform .25s ease,box-shadow .28s ease;white-space:nowrap}
-    .ek-cta::after{display:none!important}
-    .ek-cta:hover{background:var(--logo-green-dk);transform:translateY(-2px);box-shadow:0 8px 20px rgba(45,90,39,.28);color:var(--nav-white)!important}
-    .ek-cta .arrow{display:inline-block;transition:transform .25s ease}
-    .ek-cta:hover .arrow{transform:translateX(3px)}
-    .ek-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px;border-radius:6px;transition:background .2s}
-    .ek-hamburger:hover{background:rgba(45,90,39,.07)}
-    .ek-hamburger span{display:block;height:2px;background:var(--nav-text);border-radius:2px;transition:all .35s cubic-bezier(.4,0,.2,1);transform-origin:center}
-    .ek-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-    .ek-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-    .ek-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-    .ek-mobile-drawer{display:none;flex-direction:column;background:var(--nav-white);border-top:1px solid rgba(45,90,39,.08);overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.4,0,.2,1),padding .3s ease}
-    .ek-mobile-drawer.open{max-height:400px;padding:16px 0 20px}
-    .ek-mobile-drawer a{display:block;font-family:'Poppins',sans-serif;font-size:.97rem;font-weight:500;color:var(--nav-text);padding:12px 6%;border-left:3px solid transparent;transition:background .2s,color .2s,border-color .2s,padding-left .2s}
-    .ek-mobile-drawer a:hover,.ek-mobile-drawer a.nav-active{color:var(--logo-green);background:rgba(45,90,39,.05);border-left-color:var(--logo-green);padding-left:calc(6% + 6px)}
-    .ek-mobile-drawer .ek-cta-mobile{display:inline-block;margin:12px 6% 0;padding:11px 24px;background:var(--logo-green);color:var(--nav-white);font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:600;border-radius:6px;text-align:center;transition:background .25s}
-    .ek-mobile-drawer .ek-cta-mobile:hover{background:var(--logo-green-dk)}
-    .ek-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--logo-green),var(--logo-green-lt));z-index:9999;transition:width .1s linear;border-radius:0 2px 2px 0}
-    @media(max-width:900px){.ek-links{gap:26px}}
-    @media(max-width:768px){.ek-links,.ek-cta{display:none!important}.ek-hamburger{display:flex}.ek-mobile-drawer{display:flex}}
-  </style>
+  <!-- Shared nav styles -->
+  <link rel="stylesheet" href="nav.css">
 
   <style>
+
     :root{
       --primary-green:#2d5a27;--primary-light:#3d7a35;--primary-dark:#1e3d1b;
       --light-green-bg:#E8F5E9;--white:#ffffff;--text-dark:#1e1e1e;
@@ -131,6 +90,7 @@
       .contact-info{padding:30px}
       .contact-form-wrap{padding:30px}
     }
+  
   </style>
 </head>
 <body>
@@ -147,11 +107,18 @@
       <ul class="ek-links" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li class="has-dropdown">
+          <a href="projects.html">Projects <span class="chevron">&#9660;</span></a>
+          <ul class="ek-dropdown">
+            <li><a href="projects.html"><i class="fas fa-folder-open"></i> Our Projects</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
+            <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+          </ul>
+        </li>
         <li><a href="contact.html" class="nav-active">Contact</a></li>
       </ul>
     </nav>
-    <a href="#" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <a href="#" class="ek-cta">Partner With Us <span class="arrow">&rarr;</span></a>
     <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -160,8 +127,11 @@
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
+    <a href="projects.html" class="ek-sub-item"><i class="fas fa-folder-open"></i> &nbsp;Our Projects</a>
+    <a href="upcoming-events.html" class="ek-sub-item"><i class="fas fa-calendar-alt"></i> &nbsp;Upcoming Events</a>
+    <a href="gallery.html" class="ek-sub-item"><i class="fas fa-images"></i> &nbsp;Gallery</a>
     <a href="contact.html" class="nav-active">Contact</a>
-    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us &rarr;</a>
   </div>
 </header>
 
@@ -179,7 +149,7 @@
           <h4>Email Us</h4>
           <p>Or write to us at</p>
           <p><a href="mailto:eventskart2020@gmail.com">eventskart2020@gmail.com</a></p>
-          <p><a href="mailto:suchanaglobal@gmail.com">suchanaglobal@gmail.com</a></p>
+          <p><a href="mailto: info@eventskartedu.org"> info@eventskartedu.org</a></p>
         </div>
       </div>
       <div class="info-item">
@@ -193,14 +163,14 @@
         <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
         <div class="info-detail">
           <h4>Call Us</h4>
-          <p>+91 123 456 7890</p>
+          <p>+91 63049 51896</p>
         </div>
       </div>
       <div class="social-row">
-        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.facebook.com/EduEventsPlanner?rdid=9KrFcXSFyb3S2iRl" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/kalyanirao04?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/kalyani-r-82154b6b" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.youtube.com/@suchanaglobal6193" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
       </div>
     </div>
 
@@ -250,26 +220,20 @@
   <p>&copy; 2026 EventsKart. All Rights Reserved.</p>
 </footer>
 
-<!-- ===== NAV SCRIPT ===== -->
-<script>
-(function(){
-  var h=document.getElementById('ekHeader'),b=document.getElementById('ekBurger'),
-      d=document.getElementById('ekDrawer'),p=document.getElementById('ekProgress');
-  window.addEventListener('scroll',function(){
-    h.classList.toggle('scrolled',window.scrollY>10);
-    if(p){var t=document.documentElement.scrollHeight-window.innerHeight;
-    p.style.width=(t>0?(window.scrollY/t)*100:0)+'%'}
-  },{passive:true});
-  b.addEventListener('click',function(){var o=d.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
-  d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){d.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false')})});
-})();
-</script>
+<!-- Shared nav script -->
+<script src="nav.js"></script>
 
-<!-- ===== FORM + AUTO EXCEL SCRIPT ===== -->
+<!-- ===== CONTACT FORM SCRIPT (Google Sheets — no server needed) ===== -->
 <script>
-(function(){
+(function () {
+  'use strict';
 
-  /* ---------- references ---------- */
+  /* ============================================================
+     STEP: Paste your Google Apps Script Web App URL below
+     (Follow the setup guide to get this URL)
+  ============================================================ */
+  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5jsb8ZHCmlVXNrYlx9kqJAfqAN7SuQqJXE7rMtCdh0Ky_aZUcjki5auvUWB-h6ah7/exec';
+
   var form      = document.getElementById('contactForm');
   var submitBtn = document.getElementById('submitBtn');
   var success   = document.getElementById('formSuccess');
@@ -277,55 +241,21 @@
   var msgField  = document.getElementById('message');
   var charCount = document.getElementById('charCount');
 
-  /* ---------- localStorage key ---------- */
-  var STORAGE_KEY = 'ek_contact_submissions';
-
-  /* ---------- helpers ---------- */
-  function getData(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch(e){ return []; }
-  }
-  function saveData(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
-
-  /* ---------- char counter ---------- */
-  msgField.addEventListener('input', function(){
+  /* ── Char counter ── */
+  msgField.addEventListener('input', function () {
     var len = msgField.value.length;
     charCount.textContent = len + ' / 180';
     charCount.classList.toggle('limit', len >= 170);
   });
 
-  /* ---------- validation ---------- */
-  function showError(msg){
+  /* ── Show error ── */
+  function showError(msg) {
     errorBox.textContent = msg;
     errorBox.classList.add('show');
   }
 
-  /* ---------- auto-generate & download Excel ---------- */
-  function autoDownloadExcel(data){
-    var ws_data = [['Timestamp','FirstName','Email','Phone','Message']];
-    for(var i = 0; i < data.length; i++){
-      var d = data[i];
-      ws_data.push([d.Timestamp, d.FirstName, d.Email, d.Phone, d.Message]);
-    }
-
-    var ws = XLSX.utils.aoa_to_sheet(ws_data);
-    ws['!cols'] = [
-      {wch:22},
-      {wch:18},
-      {wch:32},
-      {wch:18},
-      {wch:40}
-    ];
-
-    var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Submissions');
-
-    /* auto-download to admin's Downloads folder */
-    XLSX.writeFile(wb, 'EventsKart_Contact_Submissions.xlsx');
-  }
-
-  /* ---------- submit ---------- */
-  form.addEventListener('submit', function(e){
+  /* ── Submit ── */
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     errorBox.classList.remove('show');
 
@@ -334,35 +264,30 @@
     var phone     = document.getElementById('phone').value.trim();
     var message   = msgField.value.trim();
 
-    if(!firstName){ showError('Please enter your first name.'); document.getElementById('firstName').focus(); return; }
-    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showError('Please enter a valid email address.'); document.getElementById('email').focus(); return; }
+    /* Validation */
+    if (!firstName) { showError('Please enter your first name.'); document.getElementById('firstName').focus(); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); document.getElementById('email').focus(); return; }
 
-    /* build row */
-    var row = {
-      Timestamp : new Date().toLocaleString(),
-      FirstName : firstName,
-      Email     : email,
-      Phone     : phone || '—',
-      Message   : message || '—'
-    };
-
-    /* save to localStorage */
-    var data = getData();
-    data.push(row);
-    saveData(data);
-
-    /* UI feedback */
+    /* Loading state */
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
 
-    setTimeout(function(){
-      /* auto-generate Excel and download to folder */
-      autoDownloadExcel(data);
+    /* Send to Google Sheets */
+    var params = new URLSearchParams({
+      timestamp : new Date().toLocaleString(),
+      firstName : firstName,
+      email     : email,
+      phone     : phone || '—',
+      message   : message || '—'
+    });
 
-      /* show success */
+    fetch(GOOGLE_SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
+    .finally(function () {
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
       form.style.display = 'none';
       success.classList.add('show');
-    }, 600);
+    });
   });
 
 })();
