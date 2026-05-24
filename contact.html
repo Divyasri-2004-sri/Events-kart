@@ -180,23 +180,92 @@
       <div class="form-error" id="formError"></div>
 
       <form id="contactForm" novalidate>
-        <div class="form-group">
-          <label for="firstName">First Name <span class="req">*</span></label>
-          <input type="text" id="firstName" name="FirstName" placeholder="Enter your first name" required>
+
+        <!-- Row: First Name + Last Name -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group" style="margin-bottom:0">
+            <label for="firstName">First Name <span class="req">*</span></label>
+            <input type="text" id="firstName" name="FirstName" placeholder="First name" required>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label for="lastName">Last Name <span class="req">*</span></label>
+            <input type="text" id="lastName" name="LastName" placeholder="Last name" required>
+          </div>
         </div>
+
+        <div class="form-group" style="margin-top:22px">
+          <label for="whatsappName">WhatsApp Number <span class="req">*</span></label>
+          <input type="tel" id="whatsappName" name="WhatsAppNumber" placeholder="Enter your WhatsApp number with country code" required>
+        </div>
+
         <div class="form-group">
           <label for="email">Email Address <span class="req">*</span></label>
           <input type="email" id="email" name="Email" placeholder="Enter your email address" required>
         </div>
+
+        <!-- Row: ISD Code + Mobile -->
         <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="Phone" placeholder="Enter your phone number">
+          <label for="mobile">Mobile Number <span class="req">*</span></label>
+          <div style="display:flex;gap:10px">
+            <select id="isdCode" name="ISDCode" style="width:130px;padding:13px 10px;font-family:'Open Sans',sans-serif;font-size:.9rem;color:var(--text-dark);background:#fafbfb;border:1.5px solid var(--border);border-radius:8px;outline:none;transition:border-color .3s ease,box-shadow .3s ease;flex-shrink:0">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+880">🇧🇩 +880</option>
+              <option value="+94">🇱🇰 +94</option>
+              <option value="+977">🇳🇵 +977</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+974">🇶🇦 +974</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+82">🇰🇷 +82</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+27">🇿🇦 +27</option>
+              <option value="+234">🇳🇬 +234</option>
+              <option value="+254">🇰🇪 +254</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+52">🇲🇽 +52</option>
+              <option value="+7">🇷🇺 +7</option>
+              <option value="+other">Other</option>
+            </select>
+            <input type="tel" id="mobile" name="Mobile" placeholder="Enter mobile number" required style="flex:1">
+          </div>
         </div>
+
+        <!-- Row: Country + State -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group" style="margin-bottom:0">
+            <label for="country">Country <span class="req">*</span></label>
+            <input type="text" id="country" name="Country" placeholder="Your country" required>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label for="state">State <span class="req">*</span></label>
+            <input type="text" id="state" name="State" placeholder="Your state" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:22px">
+          <label for="orgName">Organization Name <span class="req">*</span></label>
+          <input type="text" id="orgName" name="OrgName" placeholder="School / College / Company name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="orgWebsite">Organization Website <span style="color:var(--text-light);font-weight:400">(optional)</span></label>
+          <input type="url" id="orgWebsite" name="OrgWebsite" placeholder="https://yourorganization.com">
+        </div>
+
         <div class="form-group">
           <label for="message">Message</label>
           <textarea id="message" name="Message" maxlength="180" placeholder="Write your message here..."></textarea>
           <div class="char-count" id="charCount">0 / 180</div>
         </div>
+
         <button type="submit" class="btn-submit" id="submitBtn">
           <span class="btn-text">Send Message <i class="fas fa-paper-plane"></i></span>
           <span class="spinner"></span>
@@ -226,10 +295,6 @@
 (function () {
   'use strict';
 
-  /* ============================================================
-     STEP: Paste your Google Apps Script Web App URL below
-     (Follow the setup guide to get this URL)
-  ============================================================ */
   var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5jsb8ZHCmlVXNrYlx9kqJAfqAN7SuQqJXE7rMtCdh0Ky_aZUcjki5auvUWB-h6ah7/exec';
 
   var form      = document.getElementById('contactForm');
@@ -239,6 +304,16 @@
   var msgField  = document.getElementById('message');
   var charCount = document.getElementById('charCount');
 
+  /* ── ISD select focus style ── */
+  document.getElementById('isdCode').addEventListener('focus', function(){
+    this.style.borderColor = '#2d5a27';
+    this.style.boxShadow   = '0 0 0 3px rgba(45,90,39,.1)';
+  });
+  document.getElementById('isdCode').addEventListener('blur', function(){
+    this.style.borderColor = '#e0e0e0';
+    this.style.boxShadow   = 'none';
+  });
+
   /* ── Char counter ── */
   msgField.addEventListener('input', function () {
     var len = msgField.value.length;
@@ -247,9 +322,10 @@
   });
 
   /* ── Show error ── */
-  function showError(msg) {
+  function showError(msg, focusEl) {
     errorBox.textContent = msg;
     errorBox.classList.add('show');
+    if (focusEl) focusEl.focus();
   }
 
   /* ── Submit ── */
@@ -257,14 +333,27 @@
     e.preventDefault();
     errorBox.classList.remove('show');
 
-    var firstName = document.getElementById('firstName').value.trim();
-    var email     = document.getElementById('email').value.trim();
-    var phone     = document.getElementById('phone').value.trim();
-    var message   = msgField.value.trim();
+    var firstName   = document.getElementById('firstName').value.trim();
+    var lastName    = document.getElementById('lastName').value.trim();
+    var whatsapp    = document.getElementById('whatsappName').value.trim();
+    var email       = document.getElementById('email').value.trim();
+    var isdCode     = document.getElementById('isdCode').value;
+    var mobile      = document.getElementById('mobile').value.trim();
+    var country     = document.getElementById('country').value.trim();
+    var state       = document.getElementById('state').value.trim();
+    var orgName     = document.getElementById('orgName').value.trim();
+    var orgWebsite  = document.getElementById('orgWebsite').value.trim();
+    var message     = msgField.value.trim();
 
     /* Validation */
-    if (!firstName) { showError('Please enter your first name.'); document.getElementById('firstName').focus(); return; }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); document.getElementById('email').focus(); return; }
+    if (!firstName)  { showError('Please enter your first name.',      document.getElementById('firstName'));   return; }
+    if (!lastName)   { showError('Please enter your last name.',       document.getElementById('lastName'));    return; }
+    if (!whatsapp)   { showError('Please enter your WhatsApp number.',   document.getElementById('whatsappName')); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.', document.getElementById('email')); return; }
+    if (!mobile)     { showError('Please enter your mobile number.',   document.getElementById('mobile'));      return; }
+    if (!country)    { showError('Please enter your country.',         document.getElementById('country'));     return; }
+    if (!state)      { showError('Please enter your state.',           document.getElementById('state'));       return; }
+    if (!orgName)    { showError('Please enter your organization name.', document.getElementById('orgName'));   return; }
 
     /* Loading state */
     submitBtn.classList.add('loading');
@@ -272,11 +361,17 @@
 
     /* Send to Google Sheets */
     var params = new URLSearchParams({
-      timestamp : new Date().toLocaleString(),
-      firstName : firstName,
-      email     : email,
-      phone     : phone || '—',
-      message   : message || '—'
+      timestamp  : new Date().toLocaleString(),
+      firstName  : firstName,
+      lastName   : lastName,
+      whatsapp   : isdCode + ' ' + whatsapp,
+      email      : email,
+      mobile     : isdCode + ' ' + mobile,
+      country    : country,
+      state      : state,
+      orgName    : orgName,
+      orgWebsite : orgWebsite || '—',
+      message    : message   || '—'
     });
 
     fetch(GOOGLE_SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
