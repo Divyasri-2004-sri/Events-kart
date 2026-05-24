@@ -8,109 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nav.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- ===== NAV STYLES FROM nav.html ===== -->
-  <style id="ek-nav-styles">
-    :root {
-      --logo-green:    #2d5a27;
-      --logo-green-lt: #3d7a35;
-      --logo-green-dk: #1e3d1b;
-      --nav-white:     #ffffff;
-      --nav-text:      #1e1e1e;
-      --nav-text-muted:#555555;
-    }
-    .ek-header * { box-sizing: border-box; margin: 0; padding: 0; }
-    .ek-header a { text-decoration: none; color: inherit; }
-    .ek-header ul { list-style: none; }
-    .ek-header {
-      position: sticky; top: 0; z-index: 1000;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(45,90,39,0.08);
-      transition: box-shadow 0.3s ease, background 0.3s ease;
-    }
-    .ek-header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.08); background: rgba(255,255,255,0.99); }
-    .ek-nav {
-      max-width: 1300px; margin: 0 auto; padding: 0 6%;
-      height: 72px; display: flex; align-items: center;
-      justify-content: space-between; gap: 24px;
-    }
-    .ek-logo { display: flex; align-items: center; flex-shrink: 0; }
-    .ek-logo img { height: 46px; width: auto; display: block; transition: transform 0.3s ease; }
-    .ek-logo:hover img { transform: scale(1.04); }
-    .ek-links { display: flex; align-items: center; gap: 38px; flex: 1; justify-content: center; }
-    .ek-links a {
-      font-family: 'Poppins', sans-serif; font-size: 0.92rem; font-weight: 600;
-      color: var(--nav-text); position: relative; padding-bottom: 4px;
-      letter-spacing: 0.2px; transition: color 0.25s ease; white-space: nowrap;
-    }
-    .ek-links a::after {
-      content: ''; position: absolute; bottom: 0; left: 0;
-      width: 0; height: 2px; background: var(--logo-green);
-      border-radius: 2px; transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
-    }
-    .ek-links a:hover { color: var(--logo-green); }
-    .ek-links a:hover::after { width: 100%; }
-    .ek-links a.nav-active { color: var(--logo-green); }
-    .ek-links a.nav-active::after { width: 100%; }
-    .ek-cta {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 10px 22px; background: var(--logo-green);
-      color: var(--nav-white) !important; font-family: 'Poppins', sans-serif;
-      font-size: 0.88rem; font-weight: 600; border-radius: 6px;
-      letter-spacing: 0.4px; flex-shrink: 0; border: 2px solid transparent;
-      transition: background 0.28s ease, transform 0.25s ease, box-shadow 0.28s ease;
-      white-space: nowrap;
-    }
-    .ek-cta::after { display: none !important; }
-    .ek-cta:hover { background: var(--logo-green-dk); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(45,90,39,0.28); color: var(--nav-white) !important; }
-    .ek-cta .arrow { display: inline-block; transition: transform 0.25s ease; }
-    .ek-cta:hover .arrow { transform: translateX(3px); }
-    .ek-hamburger {
-      display: none; flex-direction: column; justify-content: center; gap: 5px;
-      width: 36px; height: 36px; cursor: pointer; background: none; border: none;
-      padding: 4px; border-radius: 6px; transition: background 0.2s;
-    }
-    .ek-hamburger:hover { background: rgba(45,90,39,0.07); }
-    .ek-hamburger span { display: block; height: 2px; background: var(--nav-text); border-radius: 2px; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
-    .ek-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .ek-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .ek-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .ek-mobile-drawer {
-      display: none; flex-direction: column; background: var(--nav-white);
-      border-top: 1px solid rgba(45,90,39,0.08); overflow: hidden;
-      max-height: 0; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
-    }
-    .ek-mobile-drawer.open { max-height: 400px; padding: 16px 0 20px; }
-    .ek-mobile-drawer a {
-      display: block; font-family: 'Poppins', sans-serif; font-size: 0.97rem; font-weight: 500;
-      color: var(--nav-text); padding: 12px 6%; border-left: 3px solid transparent;
-      transition: background 0.2s, color 0.2s, border-color 0.2s, padding-left 0.2s;
-    }
-    .ek-mobile-drawer a:hover, .ek-mobile-drawer a.nav-active {
-      color: var(--logo-green); background: rgba(45,90,39,0.05);
-      border-left-color: var(--logo-green); padding-left: calc(6% + 6px);
-    }
-    .ek-mobile-drawer .ek-cta-mobile {
-      display: inline-block; margin: 12px 6% 0; padding: 11px 24px;
-      background: var(--logo-green); color: var(--nav-white);
-      font-family: 'Poppins', sans-serif; font-size: 0.92rem; font-weight: 600;
-      border-radius: 6px; text-align: center; transition: background 0.25s;
-    }
-    .ek-mobile-drawer .ek-cta-mobile:hover { background: var(--logo-green-dk); }
-    .ek-progress {
-      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-      background: linear-gradient(90deg, var(--logo-green), var(--logo-green-lt));
-      z-index: 9999; transition: width 0.1s linear; border-radius: 0 2px 2px 0;
-    }
-    @media (max-width: 900px) { .ek-links { gap: 26px; } }
-    @media (max-width: 768px) {
-      .ek-links, .ek-cta { display: none !important; }
-      .ek-hamburger { display: flex; }
-      .ek-mobile-drawer { display: flex; }
-    }
-  </style>
+  
   <!-- ===== END NAV STYLES ===== -->
 
   <style>
@@ -234,13 +136,13 @@
     .team-section-header h2 { font-size: 2.5rem; margin-bottom: 12px; }
     .team-section-header .divider { width: 60px; height: 3px; background: var(--primary-green); margin: 0 auto; }
 
-    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+    .split-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 60px; align-items: start; }
 
     /* Founder image — card style matching reference design */
     .founder-img-box {
       position: relative;
       width: 100%;
-      max-width: 320px;
+      max-width: 400px;
       margin: 0 auto;
       background: #d9edd9;
       border-radius: 20px;
@@ -259,7 +161,7 @@
       z-index: 1;
       width: 88%;
       height: auto;
-      max-height: 380px;
+      max-height: 460px;
       object-fit: cover;
       object-position: top center;
       display: block;
@@ -296,7 +198,8 @@
       letter-spacing: 2px;
     }
 
-    .founder-text h2 { font-size: 2.8rem; margin-bottom: 10px; }
+    .founder-text h2 { font-size: 2.2rem; margin-bottom: 10px; }
+    .founder-text p { font-size: 0.95rem; }
     .founder-role {
       font-family: 'Poppins', sans-serif; color: var(--primary-green);
       font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
@@ -323,12 +226,12 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
     }
     .team-card {
-      background: white; padding: 40px 20px; text-align: center;
-      border-radius: var(--border-radius); box-shadow: var(--shadow-card);
+      background: white; padding: 36px 24px 28px; text-align: center;
+      border-radius: 16px; box-shadow: var(--shadow-card);
       transition: 0.4s ease; position: relative; overflow: hidden;
     }
     .team-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); }
@@ -338,13 +241,14 @@
     }
     .team-card:hover::before { transform: scaleX(1); }
     .team-img {
-      width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+      width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
       object-position: top center;
-      margin: 0 auto 20px; border: 3px solid #E8F5E9;
-      box-shadow: 0 4px 14px rgba(30,61,27,0.1);
+      margin: 0 auto 20px;
+      border: 4px solid #E8F5E9;
+      box-shadow: 0 6px 20px rgba(30,61,27,0.12);
     }
-    .team-card h4 { font-family: 'Poppins', sans-serif; font-size: 1.1rem; margin-bottom: 5px; }
-    .team-card span { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .team-card h4 { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--text-main); }
+    .team-card span { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
     /* --- ASSOCIATES --- */
     .associates-section { background: var(--bg-white); padding: 70px 0; }
@@ -378,13 +282,6 @@
       transform: scale(1.1); border-color: var(--primary-green);
       z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
-    .network-item .name-tooltip {
-      position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
-      background: #333; color: white; font-size: 0.75rem;
-      padding: 4px 10px; border-radius: 4px; opacity: 0; transition: 0.3s;
-      white-space: nowrap; pointer-events: none;
-    }
-    .network-item:hover .name-tooltip { opacity: 1; bottom: -35px; }
 
     /* --- FOOTER --- */
     footer {
@@ -436,27 +333,85 @@
     }
     .modal-close:hover { color: var(--primary-green); }
 
+    /* --- FOUNDER ROLES LIST --- */
+    .founder-roles-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .founder-roles-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      line-height: 1.6;
+    }
+    .founder-roles-list li i {
+      color: var(--primary-green);
+      font-size: 0.9rem;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
     /* --- RESPONSIVE --- */
     @media (max-width: 1024px) {
       .team-grid { grid-template-columns: repeat(2, 1fr); }
       .network-grid { grid-template-columns: repeat(4, 1fr); }
       .who-grid { grid-template-columns: 1fr; gap: 40px; }
       .who-label { position: static; }
+      .split-grid { gap: 50px; }
     }
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero { background-attachment: scroll; }
-      .split-grid { grid-template-columns: 1fr; }
-      .founder-img-box { margin-bottom: 40px; order: -1; max-width: 280px; }
-      .founder-img-box img { max-height: 300px; }
-      .team-grid { grid-template-columns: 1fr; max-width: 400px; }
-      .network-grid { grid-template-columns: repeat(3, 1fr); }
+      .container { padding: 0 18px; }
+      .section-padding { padding: 50px 0; }
+      .hero { height: auto; min-height: 55vw; padding: 60px 0; background-attachment: scroll; }
+      .hero h1 { font-size: 2.1rem; line-height: 1.2; margin-bottom: 16px; }
+      .hero p { font-size: 1rem; margin-bottom: 28px; }
+      .hero-subtitle { font-size: 0.78rem; letter-spacing: 2px; margin-bottom: 14px; }
+      .who-we-are { padding: 50px 0; }
+      .who-grid { grid-template-columns: 1fr; gap: 30px; }
+      .who-label { position: static; }
+      .who-label h2 { font-size: 1.75rem; }
+      .who-content p { font-size: 0.97rem; }
+      .split-grid { grid-template-columns: 1fr; gap: 36px; }
+      .founder-img-box { order: -1; max-width: 240px; margin: 0 auto 10px; }
+      .founder-img-box img { max-height: 260px; }
+      .founder-text h2 { font-size: 2rem; }
+      .quote-card { padding: 20px; font-size: 1.05rem; }
+      .tags-row { gap: 8px; }
+      .tag { font-size: 0.75rem; padding: 6px 12px; }
+      .team-section-header h2 { font-size: 2rem; }
+      .team-grid { grid-template-columns: 1fr; max-width: 360px; gap: 20px; }
+      .team-img { width: 160px; height: 160px; }
+      .section-header h2 { font-size: 2rem; }
+      .network-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
       .network-item { width: 90px; height: 90px; }
-      .who-grid { grid-template-columns: 1fr; }
+      .founder-section { padding: 50px 0; }
+      .team-section { padding: 50px 0; }
+      .associates-section { padding: 50px 0; }
     }
     @media (max-width: 480px) {
-      .network-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .hero h1 { font-size: 1.7rem; }
+      .hero p { font-size: 0.93rem; }
+      .btn { padding: 11px 24px; font-size: 0.9rem; }
+      .who-label h2 { font-size: 1.5rem; }
+      .founder-text h2 { font-size: 1.7rem; }
+      .team-section-header h2, .section-header h2 { font-size: 1.7rem; }
+      .network-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
       .network-item { width: 80px; height: 80px; }
+      .team-grid { max-width: 100%; }
+      .founder-roles-list li { font-size: 0.92rem; }
+      .modal-box { padding: 22px 16px; }
+      .modal-box img { width: 160px; height: 160px; }
+    }
+    @media (max-width: 360px) {
+      .hero h1 { font-size: 1.45rem; }
+      .network-item { width: 70px; height: 70px; }
+      .network-grid { gap: 10px; }
     }
   </style>
 </head>
@@ -469,18 +424,24 @@
 <header class="ek-header" id="ekHeader">
   <div class="ek-nav">
     <a href="index.html" class="ek-logo" aria-label="EventsKart Home">
-      <img src="https://z-cdn-media.chatglm.cn/files/b8b684f3-d586-4d3a-9133-ae6a853b2142.png?auth_key=1879547656-0a7b23a043374e92baf6a9bf11778bf6-0-18f697a87e3ac264b79e5e6a378a5a5d"
-           alt="EventsKart Logo">
+      <img src="https://z-cdn-media.chatglm.cn/files/b8b684f3-d586-4d3a-9133-ae6a853b2142.png?auth_key=1879547656-0a7b23a043374e92baf6a9bf11778bf6-0-18f697a87e3ac264b79e5e6a378a5a5d" alt="EventsKart Logo">
     </a>
     <nav>
       <ul class="ek-links" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html" class="nav-active">About</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li class="has-dropdown">
+          <a href="projects.html">Projects <span class="chevron">&#9660;</span></a>
+          <ul class="ek-dropdown">
+            <li><a href="projects.html"><i class="fas fa-folder-open"></i> Our Projects</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
+            <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+          </ul>
+        </li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">&#8594;</span></a>
     <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -489,8 +450,11 @@
     <a href="index.html">Home</a>
     <a href="about.html" class="nav-active">About</a>
     <a href="projects.html">Projects</a>
+    <a href="projects.html" class="ek-sub-item"><i class="fas fa-folder-open"></i> &nbsp;Our Projects</a>
+    <a href="upcoming-events.html" class="ek-sub-item"><i class="fas fa-calendar-alt"></i> &nbsp;Upcoming Events</a>
+    <a href="gallery.html" class="ek-sub-item"><i class="fas fa-images"></i> &nbsp;Gallery</a>
     <a href="contact.html">Contact</a>
-    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us &#8594;</a>
   </div>
 </header>
 <!-- ===== END NAV ===== -->
@@ -516,13 +480,13 @@
         <div class="green-bar"></div>
       </div>
       <div class="who-content">
-        <p>EventsKart is an established global educational consultancy firm founded in 2021, with a primary base in <b>Visakhapatnam, India</b>. We specialize in student engagement programs, global ocean conferences, and customized sustainable development projects for the education and eco-tourism sectors.</p>
-        <p>Our mission is to provide <b>high-quality education and eco-tourism services</b> that actively address the environmental crisis. As a <b>Ministry of Tourism registered consultant</b>, EventsKart facilitates specialized Sustainable Practices trainings for the hospitality industry and tourism departments, and designs guided tours across <b>South East Asia &amp; Europe</b>.</p>
+        <p>Founded in 2021 and headquartered in <b>Visakhapatnam</b>, EventsKart is a globally recognized educational consultancy specializing in student engagement programs, international ocean conferences, and customized sustainable development initiatives for the education and eco-tourism sectors.</p>
+        <p>Driven by a mission to deliver impactful education and responsible eco-tourism solutions, EventsKart actively contributes to addressing global environmental challenges. As a <b>Ministry of Tourism–registered consultancy</b>, we provide specialized training in sustainable practices for the hospitality and tourism industries, while curating immersive guided tours across <b>Southeast Asia and Europe</b>.</p>
         <div class="who-highlight">
           <div class="who-highlight-item"><i class="fas fa-users"></i><span>Student Engagement Programs &amp; Global Ocean Conferences</span></div>
           <div class="who-highlight-item"><i class="fas fa-leaf"></i><span>Sustainable Development Projects for Education &amp; Eco-Tourism</span></div>
           <div class="who-highlight-item"><i class="fas fa-landmark"></i><span>Ministry of Tourism Registered — Hospitality &amp; Tourism Training</span></div>
-          <div class="who-highlight-item"><i class="fas fa-globe-asia"></i><span>Guided Tours across South East Asia &amp; Europe</span></div>
+          <div class="who-highlight-item"><i class="fas fa-globe-asia"></i><span>Guided Tours across Southeast Asia &amp; Europe</span></div>
         </div>
       </div>
     </div>
@@ -543,10 +507,15 @@
         <span class="founder-role">Founder</span>
         <h2>Ms. Kalyani Rao</h2>
         <div class="quote-card">"Bring more greens… to build more blues."</div>
-        <p style="color: var(--text-muted); margin-bottom: 20px;">Kalyani Rao Bali is a global edu entrepreneur, consultant, and sustainability project designer with 18+ years of experience across education, IT, electronics, and the environment. A multilingual global speaker, she inspires young minds and mentors while leading impactful SDG initiatives like beach clean-ups and plantations worldwide. She specializes in management, branding, and project design, and is passionate about climate solutions, biodiversity, marine conservation, ecotourism, and green education. She is trained as a Blue Standard Consultant and Climate Reality Leader from USA and also, as a Solid Waste Management professional, CIE India. Currently, she is holding the positions as a</p>
-        <p style="color: var(--text-muted);">Founder of EventsKart,</p>
-        <p style="color: var(--text-muted);">Vice – President, for an NGO – Global Oceanic Adventures & Environmental Conservation Foundation.</p>
-        <p style="color: var(--text-muted);">Indian Country Ambassador & President for International English Language Teachers Association.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Kalyani Rao Bali is a global education entrepreneur, consultant, and sustainability project designer with over 18 years of experience spanning education, information technology, electronics, and environmental initiatives. A multilingual international speaker and mentor, she is dedicated to inspiring young minds and leading impactful Sustainable Development Goal (SDG) initiatives, including beach clean-up drives, plantation programs, and environmental awareness campaigns across the globe.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Her expertise lies in management, branding, strategic project design, and sustainable development solutions. Passionate about climate action, biodiversity conservation, marine ecosystem protection, eco-tourism, and green education, Kalyani actively advocates for innovative environmental practices and responsible tourism.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">She is professionally trained as a <b>Blue Standard Consultant</b> and a <b>Climate Reality Leader</b> from the USA, and is also certified in <b>Solid Waste Management</b> by CIE India.</p>
+        <p style="color: var(--text-muted); margin-bottom: 12px;"><b>Currently, she serves as:</b></p>
+        <ul class="founder-roles-list">
+          <li><i class="fas fa-check-circle"></i> Founder of EventsKart</li>
+          <li><i class="fas fa-check-circle"></i> Vice President of Global Oceanic Adventures &amp; Environmental Conservation Foundation</li>
+          <li><i class="fas fa-check-circle"></i> Indian Country Ambassador &amp; President of International English Language Teachers Association</li>
+        </ul>
 
         <div class="tags-row">
           <span class="tag">Climate Reality Leader</span>
@@ -558,7 +527,7 @@
         </div>
       </div>
       <div class="founder-img-box">
-        <img src="assets/team/KalyaniRao.jpg" alt="Ms. Kalyani Rao">
+        <img src="assets/team/kalyanirao1.jpeg" alt="Ms. Kalyani Rao">
         <div class="img-label">
           <strong>Ms. Kalyani Rao</strong>
           <span>Founder &amp; Director</span>
@@ -597,18 +566,18 @@
     </div>
     <p class="network-intro">A vast network of professionals, educators, and activists working together across continents to drive sustainable change.</p>
     <div class="network-grid">
-      <div class="network-item"><img src="assets/assosciates/cee-logo.png" alt="Assoc"><span class="name-tooltip">James Carter</span></div>
-      <div class="network-item"><img src="assets/assosciates/changes slogan Logo .png" alt="Assoc"><span class="name-tooltip">Anita Roy</span></div>
-      <div class="network-item"><img src="assets/assosciates/Copy of EventsKart Transparent logo.png" alt="Assoc"><span class="name-tooltip">M. Chen</span></div>
-      <div class="network-item"><img src="assets/assosciates/De Pedagogies_.png" alt="Assoc"><span class="name-tooltip">Sophie T.</span></div>
-      <div class="network-item"><img src="assets/assosciates/Department_of_Education.svg.png" alt="Assoc"><span class="name-tooltip">David M.</span></div>
-      <div class="network-item"><img src="assets/assosciates/GLOBAL UNAP LOGO.png" alt="Assoc"><span class="name-tooltip">Lisa Wong</span></div>
-      <div class="network-item"><img src="assets/assosciates/Goaec new logo_.jpg" alt="Assoc"><span class="name-tooltip">Raj Patel</span></div>
-      <div class="network-item"><img src="assets/assosciates/LIVEIN_LOGO-removebg-preview.png" alt="Assoc"><span class="name-tooltip">Emma W.</span></div>
-      <div class="network-item"><img src="assets/assosciates/Makaysia.jpeg" alt="Assoc"><span class="name-tooltip">Omar F.</span></div>
-      <div class="network-item"><img src="assets/assosciates/Minsitry of Touism logo.png" alt="Assoc"><span class="name-tooltip">Emily C.</span></div>
-      <div class="network-item"><img src="assets/assosciates/Research_Foundation_of_India-removebg-preview.png" alt="Assoc"><span class="name-tooltip">Tom B.</span></div>
-      <div class="network-item"><img src="assets/assosciates/SUCHANA LOGO FINAL.png" alt="Assoc"><span class="name-tooltip">Nina S.</span></div>
+      <div class="network-item"><img src="assets/assosciates/cee-logo.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/changes slogan Logo .png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/make my trip.jpeg" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/De Pedagogies_.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/Department_of_Education.svg.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/GLOBAL UNAP LOGO.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/Goaec new logo_.jpg" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/LIVEIN_LOGO-removebg-preview.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/Makaysia.jpeg" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/Minsitry of Touism logo.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/Research_Foundation_of_India-removebg-preview.png" alt="Assoc"></div>
+      <div class="network-item"><img src="assets/assosciates/SUCHANA LOGO FINAL.png" alt="Assoc"></div>
     </div>
   </div>
 </section>
@@ -628,37 +597,7 @@
 </div>
 
 <!-- ===== NAV SCRIPT FROM nav.html ===== -->
-<script id="ek-nav-script">
-(function () {
-  var header  = document.getElementById('ekHeader');
-  var burger  = document.getElementById('ekBurger');
-  var drawer  = document.getElementById('ekDrawer');
-  var progress = document.getElementById('ekProgress');
 
-  window.addEventListener('scroll', function () {
-    header.classList.toggle('scrolled', window.scrollY > 10);
-    if (progress) {
-      var docH = document.documentElement.scrollHeight - window.innerHeight;
-      var pct  = docH > 0 ? (window.scrollY / docH) * 100 : 0;
-      progress.style.width = pct + '%';
-    }
-  }, { passive: true });
-
-  burger.addEventListener('click', function () {
-    var isOpen = drawer.classList.toggle('open');
-    burger.classList.toggle('open', isOpen);
-    burger.setAttribute('aria-expanded', isOpen);
-  });
-
-  drawer.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () {
-      drawer.classList.remove('open');
-      burger.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-    });
-  });
-})();
-</script>
 
 <!-- Page Scripts -->
 <script>
@@ -670,7 +609,7 @@
   document.querySelectorAll('.network-item').forEach(function (item) {
     item.addEventListener('click', function () {
       modalImg.src = item.querySelector('img').src;
-      modalName.textContent = item.querySelector('.name-tooltip').textContent;
+      modalName.textContent = '';
       modal.classList.add('open');
     });
   });
@@ -679,5 +618,6 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('open'); });
 </script>
 
+<script src="nav.js"></script>
 </body>
 </html>
