@@ -1,0 +1,108 @@
+Thing 1 — Setup Google Sheet (5 minutes)
+1. Open this link
+👉 https://sheets.google.com → Sign in with your Gmail
+2. Create new sheet
+Click the big + (Blank spreadsheet)
+3. Type these 5 headers in Row 1
+Click cell A1 and type:
+
+A1 → Timestamp
+B1 → FirstName
+C1 → Email
+D1 → Phone
+E1 → Message
+
+4. Open the script editor
+Click Extensions (top menu) → click Apps Script
+5. Clear and paste
+Delete everything you see in the editor, then paste this:
+javascriptfunction doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  sheet.appendRow([
+    e.parameter.timestamp,
+    e.parameter.firstName,
+    e.parameter.email,
+    e.parameter.phone,
+    e.parameter.message
+  ]);
+  return ContentService.createTextOutput('OK');
+}
+6. Save it
+Press Ctrl + S → name it ContactForm → click OK
+7. Deploy it
+
+Click Deploy (top right) → New deployment
+Click the ⚙️ icon → select Web app
+Execute as → Me
+Who has access → Anyone
+Click Deploy → Authorize access → choose your Gmail → click Allow
+A URL appears — copy it (starts with https://script.google.com/macros/s/...)
+
+
+Thing 2 — Paste URL in contact.html
+Open your contact.html file in Notepad or any editor.
+Press Ctrl + F and search for:
+PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE
+Replace just that text with the URL you copied. Save the file.
+
+Tell me which step you are stuck on and I'll help immediately! 🙂You said: Open the script editor
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+Click Extensions → a dropdown opens → click Apps Script
+A new tab opens that looks like this — it will have some code already there like:
+javascriptfunction myFunction() {
+
+}
+
+Step 5 — Clear and Paste
+
+Click inside that code area
+Press Ctrl + A (selects everything)
+Press Delete (now it's empty)
+Now paste this code (Ctrl + V):
+
+javascriptfunction doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  sheet.appendRow([
+    e.parameter.timestamp,
+    e.parameter.firstName,
+    e.parameter.email,
+    e.parameter.phone,
+    e.parameter.message
+  ]);
+  return ContentService.createTextOutput('OK');
+}
+
+Step 6 — Save
+Press Ctrl + S
+A popup asks "Project name" → type ContactForm → click Rename
+
+Step 7 — Deploy
+1. Look top right — click the blue button that says "Deploy"
+2. Click "New deployment"
+3. You see a popup. Look for a ⚙️ gear icon next to "Select type" → click it → click Web app
+4. You will see two dropdowns:
+
+Execute as → make sure it says Me (your email)
+Who has access → change it to Anyone
+
+5. Click the blue Deploy button
+6. A new popup opens → click Authorize access → your Gmail account appears → click it → click Allow
+7. Now you see a screen with "Web app URL" → click Copy button next to it
+
+Step 8 — Paste in contact.html
+
+Find your contact.html file on your computer
+Right click on it → Open with → Notepad
+Press Ctrl + H (Find and Replace)
+In Find: box type → PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE
+In Replace: box → paste the URL you copied
+Click Replace All
+Press Ctrl + S to save
+
+
+Tell me exactly which step you are on right now and what you see on screen — I'll tell you exactly what to click! 😊You said: where to check those messages
