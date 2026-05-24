@@ -3,23 +3,20 @@
   
   HOW TO USE IN EVERY PAGE:
   
-  1. In <head>, add:
+  1. In <head>, add (after Google Fonts / Font Awesome links):
        <link rel="stylesheet" href="nav.css">
-     (after your Google Fonts / Font Awesome links)
   
   2. Just after <body>, add:
        <div class="ek-progress" id="ekProgress"></div>
   
-  3. Then paste the <header> block below.
-     → Change the "nav-active" class to match the current page link.
+  3. Paste the <header> block below.
+     → Change the "nav-active" class to match the current page.
   
   4. Just before </body>, add:
        <script src="nav.js"></script>
   
-  That's it — no nav styles or nav scripts anywhere else.
   ============================================================ -->
 
-<!-- ===== PASTE THIS <header> INTO EACH PAGE (change nav-active) ===== -->
 <header class="ek-header" id="ekHeader">
   <div class="ek-nav">
 
@@ -32,9 +29,16 @@
     <!-- Desktop Links -->
     <nav>
       <ul class="ek-links" role="list">
-        <li><a href="index.html"     class="nav-active">Home</a></li>
+        <li><a href="index.html" class="nav-active">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li class="has-dropdown">
+          <a href="projects.html">Projects <span class="chevron">&#9660;</span></a>
+          <ul class="ek-dropdown">
+            <li><a href="projects.html"><i class="fas fa-folder-open"></i> Our Projects</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
+            <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+          </ul>
+        </li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -55,12 +59,14 @@
 
   <!-- Mobile Drawer -->
   <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
-    <a href="index.html"     class="nav-active">Home</a>
+    <a href="index.html" class="nav-active">Home</a>
     <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
+    <a href="projects.html" class="ek-sub-item"><i class="fas fa-folder-open"></i> &nbsp;Our Projects</a>
+    <a href="upcoming-events.html" class="ek-sub-item"><i class="fas fa-calendar-alt"></i> &nbsp;Upcoming Events</a>
+    <a href="gallery.html" class="ek-sub-item"><i class="fas fa-images"></i> &nbsp;Gallery</a>
     <a href="contact.html">Contact</a>
     <a href="#" class="ek-cta-mobile">Partner With Us →</a>
   </div>
 
 </header>
-<!-- ===== END NAV ===== -->
