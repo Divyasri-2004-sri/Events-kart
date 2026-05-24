@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | EventsKart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+  <!-- ===== NAV STYLES ===== -->
+  <style id="ek-nav-styles">
+    :root {
+      --logo-green:#2d5a27; --logo-green-lt:#3d7a35; --logo-green-dk:#1e3d1b;
+      --nav-white:#ffffff; --nav-text:#1e1e1e; --nav-text-muted:#555555;
+    }
+    .ek-header *{box-sizing:border-box;margin:0;padding:0}
+    .ek-header a{text-decoration:none;color:inherit}
+    .ek-header ul{list-style:none}
+    .ek-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(45,90,39,0.08);transition:box-shadow .3s ease,background .3s ease}
+    .ek-header.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.08);background:rgba(255,255,255,0.99)}
+    .ek-nav{max-width:1300px;margin:0 auto;padding:0 6%;height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .ek-logo{display:flex;align-items:center;flex-shrink:0}
+    .ek-logo img{height:46px;width:auto;display:block;transition:transform .3s ease}
+    .ek-logo:hover img{transform:scale(1.04)}
+    .ek-links{display:flex;align-items:center;gap:38px;flex:1;justify-content:center}
+    .ek-links a{font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:600;color:var(--nav-text);position:relative;padding-bottom:4px;letter-spacing:.2px;transition:color .25s ease;white-space:nowrap}
+    .ek-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--logo-green);border-radius:2px;transition:width .3s cubic-bezier(.4,0,.2,1)}
+    .ek-links a:hover{color:var(--logo-green)}
+    .ek-links a:hover::after{width:100%}
+    .ek-links a.nav-active{color:var(--logo-green)}
+    .ek-links a.nav-active::after{width:100%}
+    .ek-cta{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:var(--logo-green);color:var(--nav-white)!important;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:600;border-radius:6px;letter-spacing:.4px;flex-shrink:0;border:2px solid transparent;transition:background .28s ease,transform .25s ease,box-shadow .28s ease;white-space:nowrap}
+    .ek-cta::after{display:none!important}
+    .ek-cta:hover{background:var(--logo-green-dk);transform:translateY(-2px);box-shadow:0 8px 20px rgba(45,90,39,.28);color:var(--nav-white)!important}
+    .ek-cta .arrow{display:inline-block;transition:transform .25s ease}
+    .ek-cta:hover .arrow{transform:translateX(3px)}
+    .ek-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px;border-radius:6px;transition:background .2s}
+    .ek-hamburger:hover{background:rgba(45,90,39,.07)}
+    .ek-hamburger span{display:block;height:2px;background:var(--nav-text);border-radius:2px;transition:all .35s cubic-bezier(.4,0,.2,1);transform-origin:center}
+    .ek-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .ek-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .ek-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .ek-mobile-drawer{display:none;flex-direction:column;background:var(--nav-white);border-top:1px solid rgba(45,90,39,.08);overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.4,0,.2,1),padding .3s ease}
+    .ek-mobile-drawer.open{max-height:400px;padding:16px 0 20px}
+    .ek-mobile-drawer a{display:block;font-family:'Poppins',sans-serif;font-size:.97rem;font-weight:500;color:var(--nav-text);padding:12px 6%;border-left:3px solid transparent;transition:background .2s,color .2s,border-color .2s,padding-left .2s}
+    .ek-mobile-drawer a:hover,.ek-mobile-drawer a.nav-active{color:var(--logo-green);background:rgba(45,90,39,.05);border-left-color:var(--logo-green);padding-left:calc(6% + 6px)}
+    .ek-mobile-drawer .ek-cta-mobile{display:inline-block;margin:12px 6% 0;padding:11px 24px;background:var(--logo-green);color:var(--nav-white);font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:600;border-radius:6px;text-align:center;transition:background .25s}
+    .ek-mobile-drawer .ek-cta-mobile:hover{background:var(--logo-green-dk)}
+    .ek-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--logo-green),var(--logo-green-lt));z-index:9999;transition:width .1s linear;border-radius:0 2px 2px 0}
+    @media(max-width:900px){.ek-links{gap:26px}}
+    @media(max-width:768px){.ek-links,.ek-cta{display:none!important}.ek-hamburger{display:flex}.ek-mobile-drawer{display:flex}}
+  </style>
+
+  <style>
+    :root{
+      --primary-green:#2d5a27;--primary-light:#3d7a35;--primary-dark:#1e3d1b;
+      --light-green-bg:#E8F5E9;--white:#ffffff;--text-dark:#1e1e1e;
+      --text-gray:#555555;--text-light:#888888;--border:#e0e0e0;
+      --radius-card:16px
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Open Sans',sans-serif;background:var(--white);color:var(--text-gray);line-height:1.8;overflow-x:hidden}
+    h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;color:var(--text-dark);line-height:1.2;letter-spacing:-.5px}
+    a{text-decoration:none;color:inherit;transition:color .3s}
+    ul{list-style:none}
+
+    /* ===== CONTACT ===== */
+    .contact-section{padding:70px 6%;background:var(--white)}
+    .contact-container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+
+    /* Left info */
+    .contact-info{padding:40px;background:linear-gradient(135deg,var(--primary-dark),var(--primary-green));border-radius:var(--radius-card);color:#fff}
+    .contact-info h2{font-size:1.8rem;color:#fff;margin-bottom:12px;font-weight:700}
+    .contact-info .info-sub{font-size:.95rem;color:rgba(255,255,255,.7);margin-bottom:30px;line-height:1.7;text-align:justify}
+    .info-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+    .info-item .info-icon{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;color:#7ec87f}
+    .info-item h4{font-family:'Poppins',sans-serif;font-size:.95rem;font-weight:600;color:#fff;margin-bottom:2px}
+    .info-item p{font-size:.9rem;color:rgba(255,255,255,.65)}
+    .info-item a{color:rgba(255,255,255,.65)}.info-item a:hover{color:#7ec87f}
+    .social-row{display:flex;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+    .social-link{width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1rem;transition:all .3s ease}
+    .social-link:hover{background:rgba(255,255,255,.15);color:#fff;transform:translateY(-3px)}
+
+    /* Right form */
+    .contact-form-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius-card);padding:40px;box-shadow:0 10px 40px rgba(0,0,0,.04)}
+    .contact-form-wrap h3{font-size:1.5rem;font-weight:700;color:var(--primary-dark);margin-bottom:6px}
+    .contact-form-wrap .form-sub{font-size:.92rem;color:var(--text-light);margin-bottom:30px}
+    .form-group{margin-bottom:22px}
+    .form-group label{display:block;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+    .form-group label .req{color:#e53e3e;font-weight:700}
+    .form-group input,.form-group textarea{width:100%;padding:13px 16px;font-family:'Open Sans',sans-serif;font-size:.95rem;color:var(--text-dark);background:#fafbfb;border:1.5px solid var(--border);border-radius:8px;outline:none;transition:border-color .3s ease,box-shadow .3s ease}
+    .form-group input:focus,.form-group textarea:focus{border-color:var(--primary-green);box-shadow:0 0 0 3px rgba(45,90,39,.1);background:#fff}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:#b0b0b0}
+    .form-group textarea{resize:vertical;min-height:120px}
+    .char-count{display:flex;justify-content:flex-end;font-size:.78rem;color:var(--text-light);margin-top:6px;font-family:'Poppins',sans-serif;font-weight:500}
+    .char-count.limit{color:#e53e3e}
+
+    .btn-submit{
+      display:inline-flex;align-items:center;gap:10px;padding:14px 36px;border-radius:50px;
+      font-family:'Poppins',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.3px;
+      background:var(--primary-green);color:#fff;border:none;cursor:pointer;
+      box-shadow:0 6px 20px rgba(45,90,39,.3);transition:all .3s ease;width:100%;justify-content:center
+    }
+    .btn-submit:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 12px 28px rgba(45,90,39,.4)}
+    .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+    .btn-submit .spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+    .btn-submit.loading .spinner{display:inline-block}
+    .btn-submit.loading .btn-text{display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .form-success{display:none;text-align:center;padding:40px 20px}
+    .form-success.show{display:block}
+    .form-success .success-icon{width:64px;height:64px;border-radius:50%;background:var(--light-green-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:var(--primary-green)}
+    .form-success h4{font-size:1.3rem;font-weight:700;margin-bottom:8px;color:var(--primary-dark)}
+    .form-success p{font-size:.95rem;color:var(--text-gray)}
+    .form-error{display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:.9rem;color:#c53030;font-weight:500}
+    .form-error.show{display:block}
+
+    /* ===== FOOTER ===== */
+    footer{background:#2d5a27;display:flex;align-items:center;justify-content:center;min-height:56px;padding:16px 24px}
+    footer p{color:rgba(255,255,255,.8);font-size:.85rem;text-align:center;margin:0}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:900px){.contact-container{grid-template-columns:1fr}}
+    @media(max-width:768px){
+      .contact-info{padding:30px}
+      .contact-form-wrap{padding:30px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="ek-progress" id="ekProgress"></div>
+
+<!-- ===== NAV ===== -->
+<header class="ek-header" id="ekHeader">
+  <div class="ek-nav">
+    <a href="home.html" class="ek-logo" aria-label="EventsKart Home">
+      <img src="https://z-cdn-media.chatglm.cn/files/b8b684f3-d586-4d3a-9133-ae6a853b2142.png?auth_key=1879547656-0a7b23a043374e92baf6a9bf11778bf6-0-18f697a87e3ac264b79e5e6a378a5a5d" alt="EventsKart Logo">
+    </a>
+    <nav>
+      <ul class="ek-links" role="list">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html" class="nav-active">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html" class="nav-active">Contact</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+  </div>
+</header>
+
+<!-- ===== CONTACT FORM ===== -->
+<section class="contact-section">
+  <div class="contact-container">
+
+    <!-- Left info -->
+    <div class="contact-info">
+      <h2>Get In Touch</h2>
+      <p class="info-sub">We'd love to hear from you. Whether you have a question about our projects, partnerships, or anything else — our team is ready to answer all your questions.</p>
+      <div class="info-item">
+        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+        <div class="info-detail">
+          <h4>Email Us</h4>
+          <p>Or write to us at</p>
+          <p><a href="mailto:eventskart2020@gmail.com">eventskart2020@gmail.com</a></p>
+          <p><a href="mailto:suchanaglobal@gmail.com">suchanaglobal@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="info-detail">
+          <h4>Visit Us</h4>
+          <p>Visakhapatnam, Andhra Pradesh, India</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+        <div class="info-detail">
+          <h4>Call Us</h4>
+          <p>+91 123 456 7890</p>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Right form -->
+    <div class="contact-form-wrap">
+      <h3>Send Us a Message</h3>
+      <p class="form-sub">Fill out the form below and we'll get back to you as soon as possible.</p>
+
+      <div class="form-error" id="formError"></div>
+
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="firstName">First Name <span class="req">*</span></label>
+          <input type="text" id="firstName" name="FirstName" placeholder="Enter your first name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="Email" placeholder="Enter your email address" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="Phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="Message" maxlength="180" placeholder="Write your message here..."></textarea>
+          <div class="char-count" id="charCount">0 / 180</div>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="btn-text">Send Message <i class="fas fa-paper-plane"></i></span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h4>Message Sent!</h4>
+        <p>Thank you for reaching out. We'll get back to you shortly.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 EventsKart. All Rights Reserved.</p>
+</footer>
+
+<!-- ===== NAV SCRIPT ===== -->
+<script>
+(function(){
+  var h=document.getElementById('ekHeader'),b=document.getElementById('ekBurger'),
+      d=document.getElementById('ekDrawer'),p=document.getElementById('ekProgress');
+  window.addEventListener('scroll',function(){
+    h.classList.toggle('scrolled',window.scrollY>10);
+    if(p){var t=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.width=(t>0?(window.scrollY/t)*100:0)+'%'}
+  },{passive:true});
+  b.addEventListener('click',function(){var o=d.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
+  d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){d.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false')})});
+})();
+</script>
+
+<!-- ===== FORM + AUTO EXCEL SCRIPT ===== -->
+<script>
+(function(){
+
+  /* ---------- references ---------- */
+  var form      = document.getElementById('contactForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var success   = document.getElementById('formSuccess');
+  var errorBox  = document.getElementById('formError');
+  var msgField  = document.getElementById('message');
+  var charCount = document.getElementById('charCount');
+
+  /* ---------- localStorage key ---------- */
+  var STORAGE_KEY = 'ek_contact_submissions';
+
+  /* ---------- helpers ---------- */
+  function getData(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveData(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+
+  /* ---------- char counter ---------- */
+  msgField.addEventListener('input', function(){
+    var len = msgField.value.length;
+    charCount.textContent = len + ' / 180';
+    charCount.classList.toggle('limit', len >= 170);
+  });
+
+  /* ---------- validation ---------- */
+  function showError(msg){
+    errorBox.textContent = msg;
+    errorBox.classList.add('show');
+  }
+
+  /* ---------- auto-generate & download Excel ---------- */
+  function autoDownloadExcel(data){
+    var ws_data = [['Timestamp','FirstName','Email','Phone','Message']];
+    for(var i = 0; i < data.length; i++){
+      var d = data[i];
+      ws_data.push([d.Timestamp, d.FirstName, d.Email, d.Phone, d.Message]);
+    }
+
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    ws['!cols'] = [
+      {wch:22},
+      {wch:18},
+      {wch:32},
+      {wch:18},
+      {wch:40}
+    ];
+
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Submissions');
+
+    /* auto-download to admin's Downloads folder */
+    XLSX.writeFile(wb, 'EventsKart_Contact_Submissions.xlsx');
+  }
+
+  /* ---------- submit ---------- */
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    errorBox.classList.remove('show');
+
+    var firstName = document.getElementById('firstName').value.trim();
+    var email     = document.getElementById('email').value.trim();
+    var phone     = document.getElementById('phone').value.trim();
+    var message   = msgField.value.trim();
+
+    if(!firstName){ showError('Please enter your first name.'); document.getElementById('firstName').focus(); return; }
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showError('Please enter a valid email address.'); document.getElementById('email').focus(); return; }
+
+    /* build row */
+    var row = {
+      Timestamp : new Date().toLocaleString(),
+      FirstName : firstName,
+      Email     : email,
+      Phone     : phone || '—',
+      Message   : message || '—'
+    };
+
+    /* save to localStorage */
+    var data = getData();
+    data.push(row);
+    saveData(data);
+
+    /* UI feedback */
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    setTimeout(function(){
+      /* auto-generate Excel and download to folder */
+      autoDownloadExcel(data);
+
+      /* show success */
+      form.style.display = 'none';
+      success.classList.add('show');
+    }, 600);
+  });
+
+})();
+</script>
+
+</body>
+</html>

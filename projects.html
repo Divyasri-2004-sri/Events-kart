@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Projects | EventsKart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Shared navigation styles (single source of truth) -->
+  <link rel="stylesheet" href="nav.css">
+
+  <style>
+    :root {
+      --primary-green: #2d5a27;
+      --primary-light: #3d7a35;
+      --primary-dark:  #1e3d1b;
+      --ocean: #0891b2;
+      --ocean-deep: #0e7490;
+      --light-green-bg: #E8F5E9;
+      --white: #ffffff;
+      --text-dark: #1e1e1e;
+      --text-gray: #555555;
+      --text-light: #888888;
+      --border: #e0e0e0;
+      --radius-pill: 50px;
+      --radius-card: 18px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--white); color: var(--text-gray);
+      line-height: 1.8; overflow-x: hidden;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: 'Poppins', sans-serif; color: var(--text-dark);
+      line-height: 1.2; letter-spacing: -0.5px;
+    }
+    a { text-decoration: none; color: inherit; transition: color 0.3s; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1300px; margin: 0 auto; }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0; transform: translateY(35px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
+    .reveal-d6 { transition-delay: 0.6s; }
+
+    /* ===== HERO ===== */
+    .pj-hero {
+      position: relative;
+      min-height: 360px;
+      display: flex; align-items: center;
+      color: var(--white);
+      overflow: hidden;
+      background: url('assets/theme/2.jpg') center 40%/cover no-repeat;
+    }
+    .pj-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(10,25,10,0.88) 0%, rgba(15,35,15,0.72) 55%, rgba(20,50,20,0.38) 100%);
+      z-index: 1;
+    }
+    .pj-hero-content {
+      position: relative; z-index: 2;
+      max-width: 640px;
+      padding: 70px 6% 65px;
+      text-align: left;
+    }
+    .pj-hero-content h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 16px; line-height: 1.15;
+    }
+    .pj-hero-content h1 span {
+      background: linear-gradient(135deg, #7ec87f, #a7f3d0);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pj-hero-content .hero-sub {
+      font-size: 1rem; font-weight: 400;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 30px; line-height: 1.8;
+      text-align: justify;
+    }
+    .btn-green {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 15px 36px; border-radius: var(--radius-pill);
+      font-family: 'Poppins', sans-serif; font-weight: 700;
+      font-size: 0.95rem; background: var(--primary-green);
+      color: var(--white); border: none; cursor: pointer;
+      transition: all 0.35s ease;
+    }
+    .btn-green:hover {
+      background: var(--primary-light); color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(45,90,39,0.4);
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .sec-head { text-align: center; margin-bottom: 50px; }
+    .sec-head h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800; color: var(--primary-dark);
+      margin-bottom: 12px; position: relative; display: inline-block;
+    }
+    .sec-head h2::after {
+      content: ''; position: absolute; bottom: -10px; left: 50%;
+      transform: translateX(-50%); width: 50px; height: 3px;
+      border-radius: 2px; background: var(--primary-green);
+    }
+    .sec-head p { font-size: 1.02rem; color: var(--text-gray); max-width: 520px; margin: 20px auto 0; }
+
+    /* ===== PROJECTS ===== */
+    .projects-sec { padding: 70px 6%; background: var(--white); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+
+    .project-card {
+      position: relative; background: var(--white);
+      border-radius: var(--radius-card); overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(45,90,39,0.1);
+      border-color: rgba(45,90,39,0.15);
+    }
+
+    .pj-header {
+      position: relative; padding: 30px 32px 26px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-green));
+      color: var(--white); overflow: hidden;
+    }
+    .project-card.ocean .pj-header {
+      background: linear-gradient(135deg, #064e6e, var(--ocean));
+    }
+    .pj-header .pj-label {
+      font-family: 'Poppins', sans-serif; font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); margin-bottom: 8px; position: relative; z-index: 1;
+    }
+    .pj-header h3 {
+      font-size: 1.65rem; font-weight: 800;
+      color: var(--white); margin-bottom: 6px; position: relative; z-index: 1;
+    }
+    .pj-header .pj-subtitle {
+      font-family: 'Poppins', sans-serif; font-size: 0.88rem;
+      font-weight: 500; color: rgba(255,255,255,0.75); position: relative; z-index: 1;
+    }
+
+    .pj-body { padding: 24px 32px 0; }
+    .pj-body p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.8; margin-bottom: 18px; }
+
+    .pj-tagline {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 16px; border-radius: 30px;
+      font-family: 'Poppins', sans-serif; font-size: 0.76rem;
+      font-weight: 700; margin-bottom: 24px;
+      background: var(--light-green-bg); color: var(--primary-dark);
+    }
+    .pj-tagline i { font-size: 0.7rem; }
+    .project-card.ocean .pj-tagline { background: #ecfeff; color: var(--ocean-deep); }
+
+    .pj-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); }
+    .pj-stat {
+      padding: 18px 12px; text-align: center;
+      border-right: 1px solid var(--border); transition: background 0.3s;
+    }
+    .pj-stat:last-child { border-right: none; }
+    .pj-stat:hover { background: var(--light-green-bg); }
+    .project-card.ocean .pj-stat:hover { background: #ecfeff; }
+    .pj-stat .pj-stat-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: var(--light-green-bg);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px; transition: all 0.3s ease;
+    }
+    .pj-stat .pj-stat-icon i { font-size: 0.85rem; color: var(--primary-green); transition: all 0.3s ease; }
+    .pj-stat:hover .pj-stat-icon { background: var(--primary-green); }
+    .pj-stat:hover .pj-stat-icon i { color: var(--white); }
+    .project-card.ocean .pj-stat .pj-stat-icon { background: #ecfeff; }
+    .project-card.ocean .pj-stat .pj-stat-icon i { color: var(--ocean); }
+    .project-card.ocean .pj-stat:hover .pj-stat-icon { background: var(--ocean); }
+    .project-card.ocean .pj-stat:hover .pj-stat-icon i { color: var(--white); }
+    .pj-stat .pj-stat-val {
+      font-family: 'Poppins', sans-serif; font-size: 1.2rem;
+      font-weight: 800; color: var(--primary-dark); display: block;
+    }
+    .project-card.ocean .pj-stat .pj-stat-val { color: var(--ocean-deep); }
+    .pj-stat .pj-stat-lbl {
+      font-size: 0.66rem; font-weight: 600; color: var(--text-light);
+      font-family: 'Poppins', sans-serif; text-transform: uppercase;
+      letter-spacing: 0.4px; margin-top: 2px; display: block;
+    }
+
+    /* ===== HIGHLIGHTS ===== */
+    .highlights-sec { padding: 70px 6%; background: #f4f7f5; }
+    .highlights-sec .sec-head h2::after { background: var(--primary-green); }
+    .hl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .hl-card {
+      display: flex; align-items: stretch;
+      background: var(--white); border-radius: var(--radius-card);
+      overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hl-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(45,90,39,0.1);
+      border-color: rgba(45,90,39,0.12);
+    }
+    .hl-card .hl-accent { width: 5px; flex-shrink: 0; background: var(--primary-green); }
+    .hl-card .hl-body { padding: 24px 20px; flex: 1; display: flex; align-items: center; gap: 18px; }
+    .hl-card .hl-icon-wrap {
+      width: 54px; height: 54px; flex-shrink: 0;
+      background: var(--light-green-bg); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.35s ease;
+    }
+    .hl-card .hl-icon-wrap i { font-size: 1.2rem; color: var(--primary-green); transition: all 0.35s ease; }
+    .hl-card:hover .hl-icon-wrap { background: var(--primary-green); }
+    .hl-card:hover .hl-icon-wrap i { color: var(--white); transform: scale(1.1); }
+    .hl-card .hl-content { flex: 1; min-width: 0; }
+    .hl-card .hl-num {
+      font-family: 'Poppins', sans-serif; font-size: 2rem;
+      font-weight: 900; color: var(--primary-dark); line-height: 1; margin-bottom: 4px;
+    }
+    .hl-card .hl-txt { font-size: 0.85rem; color: var(--text-gray); line-height: 1.5; font-weight: 500; }
+
+    /* ===== VIDEOS ===== */
+    .videos-sec { padding: 70px 6%; background: #f7faf8; }
+    .videos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+    .video-card {
+      background: var(--white); border-radius: var(--radius-card);
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .video-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(45,90,39,0.12); }
+    .video-thumb {
+      position: relative; aspect-ratio: 16/9;
+      overflow: hidden; cursor: pointer; background: #0a0a0a;
+    }
+    .video-thumb img { width: 100%; height: 100%; object-fit: cover; transition: all 0.6s ease; }
+    .video-card:hover .video-thumb img { transform: scale(1.08); filter: brightness(0.55) saturate(1.2); }
+    .video-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5) 100%);
+      z-index: 1; pointer-events: none;
+    }
+    .play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 76px; height: 76px;
+      background: rgba(45,90,39,0.85); backdrop-filter: blur(8px);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 3;
+    }
+    .play-btn i { color: var(--white); font-size: 1.6rem; margin-left: 4px; transition: transform 0.3s; }
+    .video-card:hover .play-btn { background: var(--primary-green); transform: translate(-50%, -50%) scale(1.15); }
+    .video-card:hover .play-btn i { transform: scale(1.1); }
+    .play-btn::before, .play-btn::after {
+      content: ''; position: absolute; inset: -6px;
+      border: 2px solid rgba(45,90,39,0.35); border-radius: 50%;
+    }
+    .play-btn::before { animation: pulse1 2s ease-out infinite; }
+    .play-btn::after  { animation: pulse2 2s ease-out infinite 0.6s; }
+    @keyframes pulse1 { 0% { transform:scale(1); opacity:1; } 100% { transform:scale(1.6); opacity:0; } }
+    @keyframes pulse2 { 0% { transform:scale(1); opacity:0.8; } 100% { transform:scale(1.8); opacity:0; } }
+    .video-thumb .yt-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+      padding: 5px 12px; border-radius: 6px;
+      font-family: 'Poppins', sans-serif; font-size: 0.7rem;
+      font-weight: 700; color: var(--white);
+      display: flex; align-items: center; gap: 5px;
+      z-index: 4; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .video-thumb .yt-badge i { color: #f00; font-size: 0.8rem; }
+    .video-thumb .dur-badge {
+      position: absolute; bottom: 14px; right: 14px;
+      background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 4px;
+      font-family: 'Poppins', sans-serif; font-size: 0.72rem;
+      font-weight: 600; color: var(--white); z-index: 4;
+    }
+    .video-info { padding: 24px 28px; }
+    .video-info h4 { font-size: 1.15rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; transition: color 0.3s; }
+    .video-card:hover .video-info h4 { color: var(--primary-green); }
+    .video-info p { font-size: 0.92rem; color: var(--text-gray); line-height: 1.7; margin-bottom: 14px; }
+    .video-info .watch-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Poppins', sans-serif; font-size: 0.84rem;
+      font-weight: 700; color: var(--primary-green); transition: all 0.3s;
+    }
+    .video-info .watch-link i { font-size: 0.75rem; transition: transform 0.3s; }
+    .video-info .watch-link:hover { color: var(--primary-dark); }
+    .video-info .watch-link:hover i { transform: translateX(4px); }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--primary-green); padding: 16px 6%; text-align: center; }
+    .site-footer p {
+      font-family: 'Poppins', sans-serif; font-size: 0.82rem;
+      font-weight: 500; color: rgba(255,255,255,0.85); letter-spacing: 0.3px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) { .hl-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) {
+      .pj-hero { background-attachment: scroll; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .pj-hero-content { padding: 55px 5% 50px; }
+      .pj-stats { grid-template-columns: repeat(2, 1fr); }
+      .pj-stat:nth-child(3) { border-right: none; }
+      .pj-stat:nth-child(4), .pj-stat:nth-child(5), .pj-stat:nth-child(6) { border-top: 1px solid var(--border); }
+    }
+    @media (max-width: 600px) {
+      .hl-grid { grid-template-columns: 1fr; }
+      .hl-card .hl-num { font-size: 1.7rem; }
+      .hl-card .hl-icon-wrap { width: 46px; height: 46px; }
+      .hl-card .hl-icon-wrap i { font-size: 1rem; }
+      .hl-card .hl-body { padding: 20px 16px; gap: 14px; }
+    }
+    @media (max-width: 480px) {
+      .pj-header { padding: 24px 24px 20px; }
+      .pj-body { padding: 20px 24px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ek-progress" id="ekProgress"></div>
+
+<!-- ===== EVENTSKART NAV ===== -->
+<header class="ek-header" id="ekHeader">
+  <div class="ek-nav">
+    <a href="home.html" class="ek-logo" aria-label="EventsKart Home">
+      <img src="logo.png" alt="EventsKart Logo">
+    </a>
+    <nav>
+      <ul class="ek-links" role="list">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html" class="nav-active">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html" class="nav-active">Projects</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+  </div>
+</header>
+<!-- ===== END NAV ===== -->
+
+<!-- ===== HERO ===== -->
+<section class="pj-hero" id="top">
+  <div class="pj-hero-overlay"></div>
+  <div class="pj-hero-content reveal">
+    <h1>Our <span>Projects</span></h1>
+    <p class="hero-sub">Empowering young minds to protect our planet through education, innovation, and sustainable action aligned with the UN Sustainable Development Goals.</p>
+    <a href="#projects" class="btn-green">Explore Our Mission <i class="fas fa-arrow-down"></i></a>
+  </div>
+</section>
+
+<!-- ===== FLAGSHIP PROJECTS ===== -->
+<section class="projects-sec" id="projects">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2>Our Flagship Projects</h2>
+      <p>Two missions, one goal — a sustainable future for every generation.</p>
+    </div>
+    <div class="projects-grid">
+
+      <!-- Project Suchana 1.0 -->
+      <div class="project-card reveal reveal-d1">
+        <div class="pj-header">
+          <div class="pj-label">The Global UN SDGs<br>Real Action Project</div>
+          <h3>Project Suchana</h3>
+          <div class="pj-subtitle">A competition for Planet Saviours aged 8–25 years</div>
+        </div>
+        <div class="pj-body">
+          <p>A competition-based project designed for Planet Saviours aged 8–25 years. "Suchana" means guidance in Sanskrit. Through project-based learning, young minds research global warming issues and implement real solutions aligned with UN Agenda 2050. The project follows the UN slogan — Leave No One Behind.</p>
+          <div class="pj-tagline"><i class="fas fa-leaf"></i> Leave No One Behind</div>
+        </div>
+        <div class="pj-stats">
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-building-columns"></i></div>
+            <span class="pj-stat-val">232</span>
+            <span class="pj-stat-lbl">Institutions</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-earth-americas"></i></div>
+            <span class="pj-stat-val">40+</span>
+            <span class="pj-stat-lbl">Countries</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-calendar-days"></i></div>
+            <span class="pj-stat-val">45</span>
+            <span class="pj-stat-lbl">Day Program</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-bullseye"></i></div>
+            <span class="pj-stat-val">13</span>
+            <span class="pj-stat-lbl">SDGs Covered</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-file-shield"></i></div>
+            <span class="pj-stat-val">UK</span>
+            <span class="pj-stat-lbl">Certified</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-user-graduate"></i></div>
+            <span class="pj-stat-val">✓</span>
+            <span class="pj-stat-lbl">Scholarships</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Suchana 2.0 -->
+      <div class="project-card ocean reveal reveal-d2">
+        <div class="pj-header">
+          <div class="pj-label">The Blue Ocean — An Innovation<br>for a Sustainable Ocean</div>
+          <h3>Project Suchana 2.0 </h3>
+          <div class="pj-subtitle">A global Ocean Conference continuing the Suchana mission</div>
+        </div>
+        <div class="pj-body">
+          <p>A global Ocean Conference continuing the Suchana mission, bringing together students, researchers, and NGOs to protect marine ecosystems. Focused on UN SDGs 12, 13 and 14 — addressing ocean pollution, overfishing, habitat loss, and climate impact on marine life. Supported by ICO, Dept of Education, Philippines.</p>
+          <div class="pj-tagline"><i class="fas fa-water"></i> SDG 12 · 13 · 14</div>
+        </div>
+        <div class="pj-stats">
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-microphone-lines"></i></div>
+            <span class="pj-stat-val">40</span>
+            <span class="pj-stat-lbl">Delegates/Day</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-layer-group"></i></div>
+            <span class="pj-stat-val">12, 13, 14</span>
+            <span class="pj-stat-lbl">SDGs Focus</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-certificate"></i></div>
+            <span class="pj-stat-val">✓</span>
+            <span class="pj-stat-lbl">Awards &amp; Certs</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-desktop"></i></div>
+            <span class="pj-stat-val">Zoom</span>
+            <span class="pj-stat-lbl">Virtual</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-handshake-angle"></i></div>
+            <span class="pj-stat-val">Global</span>
+            <span class="pj-stat-lbl">Partners</span>
+          </div>
+          <div class="pj-stat">
+            <div class="pj-stat-icon"><i class="fas fa-graduation-cap"></i></div>
+            <span class="pj-stat-val">60</span>
+            <span class="pj-stat-lbl">Scholarships</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRAM HIGHLIGHTS ===== -->
+<section class="highlights-sec" id="highlights">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2>Program Highlights</h2>
+      <p>Numbers that speak to the scale and impact of the Suchana mission.</p>
+    </div>
+    <div class="hl-grid">
+      <div class="hl-card reveal reveal-d1">
+        <div class="hl-accent"></div>
+        <div class="hl-body">
+          <div class="hl-icon-wrap"><i class="fas fa-building-columns"></i></div>
+          <div class="hl-content">
+            <div class="hl-num" data-target="232">0</div>
+            <div class="hl-txt">Institutions registered from 40+ countries</div>
+          </div>
+        </div>
+      </div>
+      <div class="hl-card reveal reveal-d2">
+        <div class="hl-accent"></div>
+        <div class="hl-body">
+          <div class="hl-icon-wrap"><i class="fas fa-hourglass-half"></i></div>
+          <div class="hl-content">
+            <div class="hl-num" data-target="45">0</div>
+            <div class="hl-txt">Days of project duration (1 hr/day)</div>
+          </div>
+        </div>
+      </div>
+      <div class="hl-card reveal reveal-d3">
+        <div class="hl-accent"></div>
+        <div class="hl-body">
+          <div class="hl-icon-wrap"><i class="fas fa-chalkboard-user"></i></div>
+          <div class="hl-content">
+            <div class="hl-num" data-target="15">0</div>
+            <div class="hl-txt">Guided webinars on UN SDGs</div>
+          </div>
+        </div>
+      </div>
+      <div class="hl-card reveal reveal-d4">
+        <div class="hl-accent"></div>
+        <div class="hl-body">
+          <div class="hl-icon-wrap"><i class="fas fa-seedling"></i></div>
+          <div class="hl-content">
+            <div class="hl-num" data-target="13">0</div>
+            <div class="hl-txt">Sustainable Development Goals covered</div>
+          </div>
+        </div>
+      </div>
+      <div class="hl-card reveal reveal-d5">
+        <div class="hl-accent"></div>
+        <div class="hl-body">
+          <div class="hl-icon-wrap"><i class="fas fa-scale-balanced"></i></div>
+          <div class="hl-content">
+            <div class="hl-num" data-target="5">0</div>
+            <div class="hl-txt">Global jury members for judging</div>
+          </div>
+        </div>
+      </div>
+      <div class="hl-card reveal reveal-d6">
+        <div class="hl-accent"></div>
+        <div class="hl-body">
+          <div class="hl-icon-wrap"><i class="fas fa-medal"></i></div>
+          <div class="hl-content">
+            <div class="hl-num" data-target="10">0</div>
+            <div class="hl-txt">Top teams per category win scholarships</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VIDEOS ===== -->
+<section class="videos-sec" id="videos">
+  <div class="container">
+    <div class="sec-head reveal">
+        <h2>Project Suchana</h2>
+      <p>Watch &amp; Learn</p>
+      <p>See our projects in action — real stories from real change-makers.</p>
+    </div>
+    <div class="videos-grid">
+
+      <div class="video-card reveal reveal-d1">
+        <a href="https://www.youtube.com/watch?v=SapJ67Rs6h8&t=15s" target="_blank" rel="noopener" class="video-thumb">
+          <img src="https://i.ytimg.com/vi/SapJ67Rs6h8/hqdefault.jpg" alt="Project Suchana Video">
+          <div class="yt-badge"><i class="fab fa-youtube"></i> YouTube</div>
+          <div class="play-btn"><i class="fas fa-play"></i></div>
+        </a>
+        <div class="video-info">
+          <h4>Project Suchana</h4>
+          <p>Watch how young minds from across the globe tackle urgent environmental challenges through structured project-based learning and competition.</p>
+          <a href="https://www.youtube.com/watch?v=SapJ67Rs6h8&t=15s" target="_blank" rel="noopener" class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="video-card reveal reveal-d2">
+        <a href="https://www.youtube.com/watch?v=2G7-kFzZiHc" target="_blank" rel="noopener" class="video-thumb">
+          <img src="https://i.ytimg.com/vi/2G7-kFzZiHc/hqdefault.jpg" alt="The Blue Ocean Video">
+          <div class="yt-badge"><i class="fab fa-youtube"></i> YouTube</div>
+          <div class="play-btn"><i class="fas fa-play"></i></div>
+        </a>
+        <div class="video-info">
+          <h4>The Blue Ocean — An Innovation For A Sustainable Ocean</h4>
+          <p>A global Ocean Conference initiative of Suchana 2.0, focused on UN SDGs 12, 13 and 14 — bringing together young minds for ocean sustainability and climate action.</p>
+          <a href="https://www.youtube.com/watch?v=2G7-kFzZiHc" target="_blank" rel="noopener" class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <p>&copy; 2026 EventsKart. All Rights Reserved.</p>
+</footer>
+
+<!-- Page scripts -->
+<script>
+(function () {
+  var reveals = document.querySelectorAll('.reveal');
+  var obs = new IntersectionObserver(function (entries, o) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('active'); o.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(function (r) { obs.observe(r); });
+
+  var counters = document.querySelectorAll('.hl-num[data-target]');
+  var cObs = new IntersectionObserver(function (entries, o) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        var el = e.target;
+        var target = parseInt(el.dataset.target, 10);
+        if (isNaN(target)) { o.unobserve(el); return; }
+        var current = 0;
+        var step = Math.max(target / 80, 0.5);
+        var tick = function () {
+          current += step;
+          if (current >= target) { el.textContent = target; }
+          else { el.textContent = Math.floor(current); requestAnimationFrame(tick); }
+        };
+        el.textContent = '0';
+        requestAnimationFrame(tick);
+        o.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+  counters.forEach(function (c) { cObs.observe(c); });
+})();
+</script>
+
+<!-- Shared navigation behaviour (single source of truth) -->
+<script src="nav.js"></script>
+</body>
+</html>

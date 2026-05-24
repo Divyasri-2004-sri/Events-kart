@@ -1,0 +1,478 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventsKart | Sustainable Consulting</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Shared navigation styles (single source of truth) -->
+  <link rel="stylesheet" href="nav.css">
+
+  <style>
+    /* --- VARIABLES & RESET --- */
+    :root {
+      --primary-green:  #2d5a27;
+      --primary-light:  #3d7a35;
+      --primary-dark:   #1e3d1b;
+      --light-green-bg: #E8F5E9;
+      --white:          #ffffff;
+      --text-dark:      #1e1e1e;
+      --text-gray:      #555555;
+      --border-color:   #e0e0e0;
+      --shadow-soft:    0 10px 30px rgba(0,0,0,0.05);
+      --shadow-hover:   0 20px 40px rgba(45,90,39,0.15);
+      --radius:         50px;
+      --card-radius:    16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--white);
+      color: var(--text-gray);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    /* --- ANIMATIONS --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      padding: 120px 6%;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.6)),
+                  url('https://z-cdn-media.chatglm.cn/files/4f13bb15-9c45-4ab4-8b7d-20aa413f70c2.png?auth_key=1879442336-119417cad1284fdab752c48d391f7525-0-e76270c628cc651d37dd0a04227c484c');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .hero-content { max-width: 950px; position: relative; z-index: 2; }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 25px;
+      color: var(--white);
+      font-weight: 800;
+      line-height: 1.1;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .hero h1 span {
+      background: linear-gradient(to right, #7ec87f, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #f0f0f0;
+      margin-bottom: 50px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 14px 34px;
+      border-radius: var(--radius);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.97rem;
+      letter-spacing: 0.4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: var(--primary-green);
+      color: var(--white);
+      box-shadow: 0 6px 20px rgba(45,90,39,0.35);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(45,90,39,0.45);
+    }
+    .btn-outline {
+      padding: 14px 34px;
+      border-radius: var(--radius);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.97rem;
+      letter-spacing: 0.4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.8);
+      color: var(--white);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--white);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+    }
+
+    /* --- ABOUT SECTION --- */
+    .about { padding: 100px 6%; background-color: var(--white); }
+    .container { max-width: 1300px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 80px; }
+    .section-header h2 { font-size: 2.8rem; margin-bottom: 15px; font-weight: 700; color: var(--primary-dark); }
+    .section-header p { color: var(--text-gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-image img {
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-soft);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: transform 0.5s ease;
+    }
+    .about-image:hover img { transform: perspective(1000px) rotateY(0deg); }
+    .about-text h3 { font-size: 2rem; margin-bottom: 25px; color: var(--primary-dark); font-weight: 700; }
+    .about-text p { margin-bottom: 25px; font-size: 1.05rem; }
+    .highlight-list { margin-top: 30px; }
+    .highlight-list li {
+      margin-bottom: 15px; display: flex; align-items: center;
+      font-weight: 600; color: var(--text-dark); font-size: 1rem;
+    }
+    .highlight-list li i {
+      color: var(--white); background: var(--primary-green);
+      margin-right: 15px; padding: 6px; border-radius: 50%;
+      font-size: 0.8rem; box-shadow: 0 4px 10px rgba(45,90,39,0.3);
+    }
+
+    /* --- SERVICES SECTION --- */
+    .services { padding: 100px 6%; background-color: #fafbfb; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+    .service-card {
+      background: var(--white); padding: 45px 35px;
+      border-radius: var(--card-radius); box-shadow: var(--shadow-soft);
+      transition: all 0.4s ease; text-align: left;
+      border: 1px solid rgba(0,0,0,0.02);
+      position: relative; overflow: hidden; z-index: 1;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--primary-green), var(--primary-light));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; z-index: 2;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); }
+    .service-card h3 { font-size: 1.4rem; margin-bottom: 15px; font-weight: 700; color: var(--primary-dark); }
+    .service-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; }
+    .card-icon {
+      font-size: 2.5rem; color: var(--primary-green); margin-bottom: 25px;
+      background: var(--light-green-bg); width: 70px; height: 70px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; transition: transform 0.4s ease;
+    }
+    .service-card:hover .card-icon {
+      transform: scale(1.1) rotate(5deg);
+      background: var(--primary-green); color: var(--white);
+    }
+
+    /* --- MINISTRY BANNER --- */
+    .ministry-banner {
+      background: linear-gradient(135deg, #1e3d1b, #2d5a27);
+      color: var(--white); padding: 100px 6%;
+      position: relative; overflow: hidden;
+    }
+    .ministry-banner::after {
+      content: ''; position: absolute; top: -50px; right: -50px;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.05); border-radius: 50%;
+    }
+    .ministry-content {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1300px; margin: 0 auto; gap: 60px; flex-wrap: wrap;
+      position: relative; z-index: 2;
+    }
+    .ministry-text { flex: 1; min-width: 300px; }
+    .ministry-text h2 { color: var(--white); font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; }
+    .ministry-text p { font-size: 1.15rem; opacity: 0.9; margin-bottom: 30px; font-weight: 300; }
+    .ministry-badge {
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);
+      padding: 8px 20px; border-radius: 30px; display: inline-flex;
+      align-items: center; margin-bottom: 25px; font-weight: 600;
+      font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2);
+    }
+    .ministry-badge i { margin-right: 8px; }
+    .btn-ministry {
+      display: inline-block;
+      padding: 13px 30px;
+      border-radius: var(--radius);
+      border: 2px solid rgba(255,255,255,0.7);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    .btn-ministry:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: white;
+      transform: translateY(-2px);
+    }
+    .ministry-image { flex: 1; min-width: 300px; display: flex; justify-content: center; }
+    .ministry-image i { font-size: 10rem; color: rgba(255,255,255,0.15); }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111111; color: #ffffff;
+      padding: 80px 6% 30px; font-size: 0.9rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 0.9fr;
+      gap: 60px; max-width: 1300px; margin: 0 auto 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 60px;
+    }
+    .footer-col h4 { color: var(--white); margin-bottom: 25px; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.5px; }
+    .footer-logo-card {
+      display: inline-flex; align-items: center; margin-bottom: 25px;
+      background: rgba(255,255,255,0.95); padding: 8px 30px;
+      border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+    .footer-logo-card:hover { transform: translateY(-3px); }
+    .footer-logo-card img { height: 45px; width: auto; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a { color: #aaaaaa; font-weight: 400; }
+    .footer-col ul li a:hover { color: var(--primary-light); padding-left: 5px; transition: all 0.3s; }
+    .footer-bottom { text-align: center; color: #666666; font-size: 0.85rem; }
+
+    /* --- FOLLOW / SOCIAL --- */
+    .footer-follow h4 { color: var(--white); margin-bottom: 20px; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.5px; }
+    .social-icons { display: flex; gap: 14px; align-items: center; }
+    .social-icons a {
+      display: flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      color: #aaaaaa; font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .social-icons a:hover { background: var(--primary-green); color: #fff; transform: translateY(-3px); border-color: var(--primary-green); }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+      .hero h1 { font-size: 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .ministry-content { flex-direction: column; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero { padding: 120px 5%; background-attachment: scroll; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero h1 span { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Reading progress bar -->
+<div class="ek-progress" id="ekProgress"></div>
+
+<!-- ===== EVENTSKART NAV ===== -->
+<header class="ek-header" id="ekHeader">
+  <div class="ek-nav">
+    <a href="home.html" class="ek-logo" aria-label="EventsKart Home">
+      <img src="https://z-cdn-media.chatglm.cn/files/5a6e31b4-3853-43cf-a67b-f2a7318461ae.png?auth_key=1879445825-c71fc6d1644e4245852e188e6148d483-0-ff913fac1f5eba313e0db1dc953f8313"
+           alt="EventsKart Logo">
+    </a>
+    <nav>
+      <ul class="ek-links" role="list">
+        <li><a href="home.html"     class="nav-active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
+    <a href="home.html" class="nav-active">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+  </div>
+</header>
+<!-- ===== END NAV ===== -->
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content reveal">
+    <h1>Awareness is the Foundation <br><span>of Conservation</span></h1>
+    <p>
+      EventsKart is a global consultancy specializing in student engagement programs, global ocean conferences,
+      and customized sustainable development projects for the education and eco-tourism sectors —
+      founded in 2021, based in Visakhapatnam, India.
+    </p>
+    <div class="hero-buttons">
+      <a href="contact.html" class="btn-primary">Collaborate With Us &rarr;</a>
+      <a href="#services" class="btn-outline">Our Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image reveal">
+        <img src="assets/theme/1.png" alt="Workshop">
+      </div>
+      <div class="about-text reveal">
+        <h3>Sustainable Development for Education &amp; Tourism</h3>
+        <p>At EventsKart, we are committed to creating and providing high-quality all-around education and services to wave off the environmental crisis. Our approach is holistic, engaging new minds on Eco-Tourism.</p>
+        <p>We design specialized projects that connect people with the environment, fostering a community that values preservation as much as exploration.</p>
+        <ul class="highlight-list">
+          <li><i class="fas fa-check"></i> Education Campaigns &amp; Workshops</li>
+          <li><i class="fas fa-check"></i> Ocean &amp; Environment Protection</li>
+          <li><i class="fas fa-check"></i> Eco-Tourism Consulting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2>What We Do</h2>
+      <p>Empowering communities through knowledge and sustainable practices.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>Education Campaigns</h3>
+        <p>We bridge gaps in knowledge and connection to engage new minds. Our workshops are designed to inspire the next generation of eco-leaders.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="card-icon"><i class="fas fa-globe-asia"></i></div>
+        <h3>Eco-Tourism</h3>
+        <p>Dedicated to creating high-quality services that promote tourism which protects and preserves our natural resources for the future.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="card-icon"><i class="fas fa-hands-helping"></i></div>
+        <h3>Consultancy</h3>
+        <p>Providing expert training and strategy for the tourism sector to ensure sustainable growth and environmental awareness.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <a href="#" class="footer-logo-card">
+        <img src="https://z-cdn-media.chatglm.cn/files/16f3d77a-4d3e-4e7e-9668-89b76d5ea0cb.png?auth_key=1879446291-ad8ce2fa11be4b9a8f44fae7ce1a9d6f-0-bb2723f8dce5d850e704a69e1e7c868f" alt="EventsKart Logo">
+      </a>
+      <p style="color:#aaa;">Designing a sustainable future through education and tourism.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li>Andhra Pradesh, India</li>
+        <li>contact@eventskart.com</li>
+        <li>+91 123 456 7890</li>
+      </ul>
+    </div>
+    <div class="footer-col footer-follow">
+      <h4>Follow</h4>
+      <div class="social-icons">
+
+  <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 EventsKart. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Scroll reveal -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var reveals = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('active'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(function (r) { observer.observe(r); });
+  });
+</script>
+
+<!-- Shared navigation behaviour (single source of truth) -->
+<script src="nav.js"></script>
+</body>
+</html>

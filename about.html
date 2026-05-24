@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | EventsKart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- ===== NAV STYLES FROM nav.html ===== -->
+  <style id="ek-nav-styles">
+    :root {
+      --logo-green:    #2d5a27;
+      --logo-green-lt: #3d7a35;
+      --logo-green-dk: #1e3d1b;
+      --nav-white:     #ffffff;
+      --nav-text:      #1e1e1e;
+      --nav-text-muted:#555555;
+    }
+    .ek-header * { box-sizing: border-box; margin: 0; padding: 0; }
+    .ek-header a { text-decoration: none; color: inherit; }
+    .ek-header ul { list-style: none; }
+    .ek-header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(45,90,39,0.08);
+      transition: box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .ek-header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.08); background: rgba(255,255,255,0.99); }
+    .ek-nav {
+      max-width: 1300px; margin: 0 auto; padding: 0 6%;
+      height: 72px; display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .ek-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .ek-logo img { height: 46px; width: auto; display: block; transition: transform 0.3s ease; }
+    .ek-logo:hover img { transform: scale(1.04); }
+    .ek-links { display: flex; align-items: center; gap: 38px; flex: 1; justify-content: center; }
+    .ek-links a {
+      font-family: 'Poppins', sans-serif; font-size: 0.92rem; font-weight: 600;
+      color: var(--nav-text); position: relative; padding-bottom: 4px;
+      letter-spacing: 0.2px; transition: color 0.25s ease; white-space: nowrap;
+    }
+    .ek-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--logo-green);
+      border-radius: 2px; transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ek-links a:hover { color: var(--logo-green); }
+    .ek-links a:hover::after { width: 100%; }
+    .ek-links a.nav-active { color: var(--logo-green); }
+    .ek-links a.nav-active::after { width: 100%; }
+    .ek-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 22px; background: var(--logo-green);
+      color: var(--nav-white) !important; font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem; font-weight: 600; border-radius: 6px;
+      letter-spacing: 0.4px; flex-shrink: 0; border: 2px solid transparent;
+      transition: background 0.28s ease, transform 0.25s ease, box-shadow 0.28s ease;
+      white-space: nowrap;
+    }
+    .ek-cta::after { display: none !important; }
+    .ek-cta:hover { background: var(--logo-green-dk); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(45,90,39,0.28); color: var(--nav-white) !important; }
+    .ek-cta .arrow { display: inline-block; transition: transform 0.25s ease; }
+    .ek-cta:hover .arrow { transform: translateX(3px); }
+    .ek-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; cursor: pointer; background: none; border: none;
+      padding: 4px; border-radius: 6px; transition: background 0.2s;
+    }
+    .ek-hamburger:hover { background: rgba(45,90,39,0.07); }
+    .ek-hamburger span { display: block; height: 2px; background: var(--nav-text); border-radius: 2px; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
+    .ek-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .ek-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .ek-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .ek-mobile-drawer {
+      display: none; flex-direction: column; background: var(--nav-white);
+      border-top: 1px solid rgba(45,90,39,0.08); overflow: hidden;
+      max-height: 0; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+    }
+    .ek-mobile-drawer.open { max-height: 400px; padding: 16px 0 20px; }
+    .ek-mobile-drawer a {
+      display: block; font-family: 'Poppins', sans-serif; font-size: 0.97rem; font-weight: 500;
+      color: var(--nav-text); padding: 12px 6%; border-left: 3px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, padding-left 0.2s;
+    }
+    .ek-mobile-drawer a:hover, .ek-mobile-drawer a.nav-active {
+      color: var(--logo-green); background: rgba(45,90,39,0.05);
+      border-left-color: var(--logo-green); padding-left: calc(6% + 6px);
+    }
+    .ek-mobile-drawer .ek-cta-mobile {
+      display: inline-block; margin: 12px 6% 0; padding: 11px 24px;
+      background: var(--logo-green); color: var(--nav-white);
+      font-family: 'Poppins', sans-serif; font-size: 0.92rem; font-weight: 600;
+      border-radius: 6px; text-align: center; transition: background 0.25s;
+    }
+    .ek-mobile-drawer .ek-cta-mobile:hover { background: var(--logo-green-dk); }
+    .ek-progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--logo-green), var(--logo-green-lt));
+      z-index: 9999; transition: width 0.1s linear; border-radius: 0 2px 2px 0;
+    }
+    @media (max-width: 900px) { .ek-links { gap: 26px; } }
+    @media (max-width: 768px) {
+      .ek-links, .ek-cta { display: none !important; }
+      .ek-hamburger { display: flex; }
+      .ek-mobile-drawer { display: flex; }
+    }
+  </style>
+  <!-- ===== END NAV STYLES ===== -->
+
+  <style>
+    :root {
+      --primary-green:  #2d5a27;
+      --primary-dark:   #1e3d1b;
+      --accent-green:   #4CAF50;
+      --bg-light:       #F9FAFB;
+      --bg-white:       #FFFFFF;
+      --text-main:      #2D3436;
+      --text-muted:     #636E72;
+      --border-radius:  8px;
+      --shadow-card:    0 10px 40px rgba(0,0,0,0.06);
+      --shadow-hover:   0 20px 50px rgba(45,90,39,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-white);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+
+    a { text-decoration: none; color: inherit; transition: 0.3s; }
+    ul { list-style: none; }
+
+    /* JUSTIFY ALL TEXT */
+    p, .who-content p, .founder-text p, .quote-card,
+    .who-highlight-item span, .network-intro {
+      text-align: justify;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-padding { padding: 70px 0; }
+    .text-center { text-align: center; }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background-color: var(--primary-green);
+      color: white;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* --- HERO --- */
+    .hero {
+      height: 52vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background-image: url('assets/theme/3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.65));
+    }
+    .hero-content { position: relative; z-index: 2; color: white; max-width: 800px; }
+    .hero-subtitle {
+      text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem;
+      font-weight: 600; color: var(--accent-green); margin-bottom: 20px; display: block;
+    }
+    .hero h1 { font-size: 3.8rem; margin-bottom: 25px; color: #fff; }
+    .hero p { font-size: 1.2rem; opacity: 0.9; font-weight: 300; margin-bottom: 40px; text-align: justify; }
+
+    /* --- WHO WE ARE --- */
+    .who-we-are { background: var(--bg-light); padding: 70px 0; }
+    .who-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: start; }
+    .who-label { position: sticky; top: 100px; }
+    .who-label .eyebrow {
+      display: inline-block; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--primary-green); margin-bottom: 16px;
+    }
+    .who-label h2 { font-size: 2.2rem; line-height: 1.25; }
+    .who-label .green-bar { width: 48px; height: 3px; background: var(--primary-green); margin-top: 20px; }
+    .who-content p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 22px; }
+    .who-highlight { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+    .who-highlight-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: var(--bg-white); padding: 16px 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      border-left: 3px solid var(--primary-green);
+    }
+    .who-highlight-item i { color: var(--primary-green); font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
+    .who-highlight-item span { font-size: 0.95rem; font-weight: 500; color: var(--text-main); }
+
+    /* --- FOUNDER / OUR TEAM SECTION --- */
+    .founder-section { background: var(--bg-white); padding: 70px 0; }
+
+    .team-section-header {
+      text-align: center; margin-bottom: 50px;
+    }
+    .team-section-header .eyebrow {
+      display: inline-block; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--primary-green); margin-bottom: 12px;
+    }
+    .team-section-header h2 { font-size: 2.5rem; margin-bottom: 12px; }
+    .team-section-header .divider { width: 60px; height: 3px; background: var(--primary-green); margin: 0 auto; }
+
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+
+    /* Founder image — card style matching reference design */
+    .founder-img-box {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      background: #d9edd9;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(30,61,27,0.13);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    /* No offset frame needed */
+    .founder-img-box::after { display: none; }
+
+    /* Photo area — light green bg, image sits naturally with no crop box */
+    .founder-img-box img {
+      position: relative;
+      z-index: 1;
+      width: 88%;
+      height: auto;
+      max-height: 380px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border-radius: 50% 50% 0 0 / 44% 44% 0 0;
+      margin: 28px auto 0;
+      box-shadow: none;
+    }
+
+    /* White label strip at the bottom */
+    .founder-img-box .img-label {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      background: #ffffff;
+      padding: 16px 20px 18px;
+      text-align: center;
+      margin-top: 0;
+      border-top: none;
+    }
+    .founder-img-box .img-label strong {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+    .founder-img-box .img-label span {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .founder-text h2 { font-size: 2.8rem; margin-bottom: 10px; }
+    .founder-role {
+      font-family: 'Poppins', sans-serif; color: var(--primary-green);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 30px; display: block;
+    }
+    .quote-card {
+      background: var(--bg-light); padding: 30px;
+      border-left: 4px solid var(--primary-green);
+      margin: 30px 0; font-style: italic;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: #555;
+    }
+    .tags-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .tag {
+      font-size: 0.8rem; padding: 8px 16px;
+      background: #E8F5E9; color: var(--primary-green);
+      border-radius: 50px; font-weight: 500;
+    }
+
+    /* --- TEAM CARDS --- */
+    .team-section { background: var(--bg-light); padding: 70px 0; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .team-card {
+      background: white; padding: 40px 20px; text-align: center;
+      border-radius: var(--border-radius); box-shadow: var(--shadow-card);
+      transition: 0.4s ease; position: relative; overflow: hidden;
+    }
+    .team-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); }
+    .team-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--primary-green); transform: scaleX(0); transition: 0.4s;
+    }
+    .team-card:hover::before { transform: scaleX(1); }
+    .team-img {
+      width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+      object-position: top center;
+      margin: 0 auto 20px; border: 3px solid #E8F5E9;
+      box-shadow: 0 4px 14px rgba(30,61,27,0.1);
+    }
+    .team-card h4 { font-family: 'Poppins', sans-serif; font-size: 1.1rem; margin-bottom: 5px; }
+    .team-card span { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* --- ASSOCIATES --- */
+    .associates-section { background: var(--bg-white); padding: 70px 0; }
+    .section-header { margin-bottom: 50px; text-align: center; }
+    .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
+    .divider { width: 60px; height: 3px; background: var(--primary-green); margin: 0 auto; }
+
+    .network-intro { max-width: 700px; margin: 0 auto 50px; text-align: center; color: var(--text-muted); }
+
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px;
+      justify-items: center;
+    }
+    .network-item {
+      position: relative;
+      width: 110px; height: 110px;
+      border-radius: 50%; overflow: hidden;
+      border: 3px solid #E8F5E9;
+      transition: 0.3s; cursor: pointer;
+      background: var(--bg-white);
+    }
+    .network-item img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      padding: 10px;
+      transition: 0.5s;
+    }
+    .network-item:hover {
+      transform: scale(1.1); border-color: var(--primary-green);
+      z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .network-item .name-tooltip {
+      position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
+      background: #333; color: white; font-size: 0.75rem;
+      padding: 4px 10px; border-radius: 4px; opacity: 0; transition: 0.3s;
+      white-space: nowrap; pointer-events: none;
+    }
+    .network-item:hover .name-tooltip { opacity: 1; bottom: -35px; }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #2d5a27;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 16px 24px;
+    }
+    footer p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
+      text-align: center;
+      margin: 0;
+    }
+
+    /* --- ASSOCIATE MODAL --- */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); z-index: 9999;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: white; border-radius: 16px; padding: 30px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3); position: relative;
+      max-width: 360px; width: 90%; text-align: center;
+      animation: modalIn 0.3s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .modal-box img {
+      width: 220px; height: 220px; border-radius: 50%; object-fit: contain;
+      border: 4px solid var(--primary-green); display: block; margin: 0 auto 20px;
+      background: var(--bg-light); padding: 12px;
+    }
+    .modal-box .modal-name {
+      font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 600;
+      color: var(--text-main);
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 16px; font-size: 1.6rem;
+      cursor: pointer; color: #999; line-height: 1; transition: color 0.2s;
+      background: none; border: none; font-family: inherit;
+    }
+    .modal-close:hover { color: var(--primary-green); }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 1024px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .network-grid { grid-template-columns: repeat(4, 1fr); }
+      .who-grid { grid-template-columns: 1fr; gap: 40px; }
+      .who-label { position: static; }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero { background-attachment: scroll; }
+      .split-grid { grid-template-columns: 1fr; }
+      .founder-img-box { margin-bottom: 40px; order: -1; max-width: 280px; }
+      .founder-img-box img { max-height: 300px; }
+      .team-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .network-grid { grid-template-columns: repeat(3, 1fr); }
+      .network-item { width: 90px; height: 90px; }
+      .who-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .network-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .network-item { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Reading progress bar -->
+<div class="ek-progress" id="ekProgress"></div>
+
+<!-- ===== EVENTSKART NAV ===== -->
+<header class="ek-header" id="ekHeader">
+  <div class="ek-nav">
+    <a href="home.html" class="ek-logo" aria-label="EventsKart Home">
+      <img src="https://z-cdn-media.chatglm.cn/files/b8b684f3-d586-4d3a-9133-ae6a853b2142.png?auth_key=1879547656-0a7b23a043374e92baf6a9bf11778bf6-0-18f697a87e3ac264b79e5e6a378a5a5d"
+           alt="EventsKart Logo">
+    </a>
+    <nav>
+      <ul class="ek-links" role="list">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html" class="nav-active">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">→</span></a>
+    <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
+    <a href="home.html">Home</a>
+    <a href="about.html" class="nav-active">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+  </div>
+</header>
+<!-- ===== END NAV ===== -->
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <span class="hero-subtitle">Our Philosophy</span>
+    <h1>Operating at the Intersection</h1>
+    <p>EventsKart operates at the intersection of environmental conservation, professional training, and global tourism — hosting educational campaigns and workshops designed to bridge knowledge gaps and inspire action towards a sustainable future.</p>
+    <a href="#founder" class="btn">Meet Our Founder</a>
+  </div>
+</section>
+
+<!-- Who We Are -->
+<section class="who-we-are">
+  <div class="container">
+    <div class="who-grid">
+      <div class="who-label">
+        <span class="eyebrow">Who We Are</span>
+        <h2>Awareness is the foundation of conservation</h2>
+        <div class="green-bar"></div>
+      </div>
+      <div class="who-content">
+        <p>EventsKart is an established global educational consultancy firm founded in 2021, with a primary base in <b>Visakhapatnam, India</b>. We specialize in student engagement programs, global ocean conferences, and customized sustainable development projects for the education and eco-tourism sectors.</p>
+        <p>Our mission is to provide <b>high-quality education and eco-tourism services</b> that actively address the environmental crisis. As a <b>Ministry of Tourism registered consultant</b>, EventsKart facilitates specialized Sustainable Practices trainings for the hospitality industry and tourism departments, and designs guided tours across <b>South East Asia &amp; Europe</b>.</p>
+        <div class="who-highlight">
+          <div class="who-highlight-item"><i class="fas fa-users"></i><span>Student Engagement Programs &amp; Global Ocean Conferences</span></div>
+          <div class="who-highlight-item"><i class="fas fa-leaf"></i><span>Sustainable Development Projects for Education &amp; Eco-Tourism</span></div>
+          <div class="who-highlight-item"><i class="fas fa-landmark"></i><span>Ministry of Tourism Registered — Hospitality &amp; Tourism Training</span></div>
+          <div class="who-highlight-item"><i class="fas fa-globe-asia"></i><span>Guided Tours across South East Asia &amp; Europe</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Team / Founder Section -->
+<section id="founder" class="founder-section">
+  <div class="container">
+
+    <div class="team-section-header">
+      <span class="eyebrow">Our Team</span>
+      <h2>Meet the People Behind EventsKart</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="split-grid">
+      <div class="founder-text">
+        <span class="founder-role">Founder &amp; Director</span>
+        <h2>Ms. Kalyani Rao</h2>
+        <div class="quote-card">"Bring more greens… to build more blues."</div>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Kalyani Rao Bali is a global edu entrepreneur, consultant, and sustainability project designer with 18+ years of experience across education, IT, electronics, and the environment. A multilingual global speaker, she inspires young minds and mentors while leading impactful SDG initiatives like beach clean-ups and plantations worldwide. She specializes in management, branding, and project design, and is passionate about climate solutions, biodiversity, marine conservation, ecotourism, and green education. She is trained as a Blue Standard Consultant and Climate Reality Leader from USA and also, as a Solid Waste Management professional, CIE India. Currently, she is holding the positions as a</p>
+        <p style="color: var(--text-muted);">Founder of EventsKart,</p>
+        <p style="color: var(--text-muted);">Vice – President, for an NGO – Global Oceanic Adventures & Environmental Conservation Foundation.</p>
+        <p style="color: var(--text-muted);">Indian Country Ambassador & President for International English Language Teachers Association.</p>
+
+        <div class="tags-row">
+          <span class="tag">Climate Reality Leader</span>
+          <span class="tag">Blue Standard Consultant</span>
+          <span class="tag">Ministry of Tourism</span>
+          <span class="tag">IELTA India President</span>
+          <span class="tag">T4 Ambassador, UK</span>
+          <span class="tag">VP, G-SIL Society</span>
+        </div>
+      </div>
+      <div class="founder-img-box">
+        <img src="assets/team/KalyaniRao.jpg" alt="Ms. Kalyani Rao">
+        <div class="img-label">
+          <strong>Ms. Kalyani Rao</strong>
+          <span>Founder &amp; Director</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Cards -->
+<section class="team-section">
+  <div class="container">
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="assets/team/Manohar-Balaga.webp" alt="Manohar Balaga" class="team-img">
+        <h4>Manohar Balaga</h4>
+      </div>
+      <div class="team-card">
+        <img src="assets/team/UmaSudhindra.webp" alt="Uma Sudhindra" class="team-img">
+        <h4>Uma Sudhindra</h4>
+      </div>
+      <div class="team-card">
+        <img src="assets/team/Dr_Margarita_Ballesteros.webp" alt="Dr Margarita C. Ballesteros" class="team-img">
+        <h4>Dr Margarita C. Ballesteros</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Associates -->
+<section class="associates-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Our Global Associates</h2>
+      <div class="divider"></div>
+    </div>
+    <p class="network-intro">A vast network of professionals, educators, and activists working together across continents to drive sustainable change.</p>
+    <div class="network-grid">
+      <div class="network-item"><img src="assets/assosciates/cee-logo.png" alt="Assoc"><span class="name-tooltip">James Carter</span></div>
+      <div class="network-item"><img src="assets/assosciates/changes slogan Logo .png" alt="Assoc"><span class="name-tooltip">Anita Roy</span></div>
+      <div class="network-item"><img src="assets/assosciates/Copy of EventsKart Transparent logo.png" alt="Assoc"><span class="name-tooltip">M. Chen</span></div>
+      <div class="network-item"><img src="assets/assosciates/De Pedagogies_.png" alt="Assoc"><span class="name-tooltip">Sophie T.</span></div>
+      <div class="network-item"><img src="assets/assosciates/Department_of_Education.svg.png" alt="Assoc"><span class="name-tooltip">David M.</span></div>
+      <div class="network-item"><img src="assets/assosciates/GLOBAL UNAP LOGO.png" alt="Assoc"><span class="name-tooltip">Lisa Wong</span></div>
+      <div class="network-item"><img src="assets/assosciates/Goaec new logo_.jpg" alt="Assoc"><span class="name-tooltip">Raj Patel</span></div>
+      <div class="network-item"><img src="assets/assosciates/LIVEIN_LOGO-removebg-preview.png" alt="Assoc"><span class="name-tooltip">Emma W.</span></div>
+      <div class="network-item"><img src="assets/assosciates/Makaysia.jpeg" alt="Assoc"><span class="name-tooltip">Omar F.</span></div>
+      <div class="network-item"><img src="assets/assosciates/Minsitry of Touism logo.png" alt="Assoc"><span class="name-tooltip">Emily C.</span></div>
+      <div class="network-item"><img src="assets/assosciates/Research_Foundation_of_India-removebg-preview.png" alt="Assoc"><span class="name-tooltip">Tom B.</span></div>
+      <div class="network-item"><img src="assets/assosciates/SUCHANA LOGO FINAL.png" alt="Assoc"><span class="name-tooltip">Nina S.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 EventsKart. All Rights Reserved.</p>
+</footer>
+
+<!-- Associate Modal -->
+<div class="modal-overlay" id="assocModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <img id="modalImg" src="" alt="Associate">
+    <p class="modal-name" id="modalName"></p>
+  </div>
+</div>
+
+<!-- ===== NAV SCRIPT FROM nav.html ===== -->
+<script id="ek-nav-script">
+(function () {
+  var header  = document.getElementById('ekHeader');
+  var burger  = document.getElementById('ekBurger');
+  var drawer  = document.getElementById('ekDrawer');
+  var progress = document.getElementById('ekProgress');
+
+  window.addEventListener('scroll', function () {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+    if (progress) {
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct  = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+      progress.style.width = pct + '%';
+    }
+  }, { passive: true });
+
+  burger.addEventListener('click', function () {
+    var isOpen = drawer.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', isOpen);
+  });
+
+  drawer.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
+
+<!-- Page Scripts -->
+<script>
+  var modal      = document.getElementById('assocModal');
+  var modalImg   = document.getElementById('modalImg');
+  var modalName  = document.getElementById('modalName');
+  var modalClose = document.getElementById('modalClose');
+
+  document.querySelectorAll('.network-item').forEach(function (item) {
+    item.addEventListener('click', function () {
+      modalImg.src = item.querySelector('img').src;
+      modalName.textContent = item.querySelector('.name-tooltip').textContent;
+      modal.classList.add('open');
+    });
+  });
+  modalClose.addEventListener('click', function () { modal.classList.remove('open'); });
+  modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('open'); });
+</script>
+
+</body>
+</html>

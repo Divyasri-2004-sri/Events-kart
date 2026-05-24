@@ -1,0 +1,66 @@
+<!-- ============================================================
+  nav.html — EventsKart Navigation Reference Snippet
+  
+  HOW TO USE IN EVERY PAGE:
+  
+  1. In <head>, add:
+       <link rel="stylesheet" href="nav.css">
+     (after your Google Fonts / Font Awesome links)
+  
+  2. Just after <body>, add:
+       <div class="ek-progress" id="ekProgress"></div>
+  
+  3. Then paste the <header> block below.
+     → Change the "nav-active" class to match the current page link.
+  
+  4. Just before </body>, add:
+       <script src="nav.js"></script>
+  
+  That's it — no nav styles or nav scripts anywhere else.
+  ============================================================ -->
+
+<!-- ===== PASTE THIS <header> INTO EACH PAGE (change nav-active) ===== -->
+<header class="ek-header" id="ekHeader">
+  <div class="ek-nav">
+
+    <!-- Logo -->
+    <a href="home.html" class="ek-logo" aria-label="EventsKart Home">
+      <img src="https://z-cdn-media.chatglm.cn/files/5a6e31b4-3853-43cf-a67b-f2a7318461ae.png?auth_key=1879445825-c71fc6d1644e4245852e188e6148d483-0-ff913fac1f5eba313e0db1dc953f8313"
+           alt="EventsKart Logo">
+    </a>
+
+    <!-- Desktop Links -->
+    <nav>
+      <ul class="ek-links" role="list">
+        <li><a href="home.html"     class="nav-active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Desktop CTA -->
+    <a href="#" class="ek-cta">
+      Partner With Us <span class="arrow">→</span>
+    </a>
+
+    <!-- Hamburger (mobile only) -->
+    <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div><!-- /.ek-nav -->
+
+  <!-- Mobile Drawer -->
+  <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
+    <a href="home.html"     class="nav-active">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" class="ek-cta-mobile">Partner With Us →</a>
+  </div>
+
+</header>
+<!-- ===== END NAV ===== -->
