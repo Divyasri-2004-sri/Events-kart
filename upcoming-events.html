@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcoming Events | EventsKart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="nav.css">
+
+  <style>
+    :root {
+      --green:       #2d5a27;
+      --green-lt:    #3d7a35;
+      --green-dk:    #1e3d1b;
+      --green-pale:  #E8F5E9;
+      --white:       #ffffff;
+      --text-dark:   #1a1a1a;
+      --text-muted:  #555;
+      --border:      #e0e0e0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+    h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s cubic-bezier(0.2,0.8,0.2,1), transform 0.8s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ── HERO BANNER ── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--green-dk) 0%, var(--green) 60%, #4a8a40 100%);
+      padding: 70px 6% 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.06) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    }
+    .page-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #a8d8a0;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 30px;
+      margin-bottom: 22px;
+    }
+    .page-hero h1 {
+      color: #fff; font-size: 3.2rem; font-weight: 800;
+      margin-bottom: 14px; line-height: 1.15;
+      position: relative; z-index: 1;
+    }
+    .page-hero p {
+      color: rgba(255,255,255,0.82); font-size: 1.1rem;
+      max-width: 600px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .events-section { padding: 80px 6%; background: #f8faf8; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* ── EVENT CARD ── */
+    .event-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(45,90,39,0.10);
+      border: 1px solid rgba(45,90,39,0.07);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 60px;
+    }
+
+    /* Left — poster */
+    .event-poster {
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+      background: #000;
+    }
+    .event-poster img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .event-card:hover .event-poster img { transform: scale(1.03); }
+
+    .poster-badge {
+      position: absolute; top: 20px; left: 20px;
+      background: rgba(45,90,39,0.92);
+      color: #fff; font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 30px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Right — details */
+    .event-details {
+      padding: 48px 44px;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 0;
+    }
+
+    .event-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--green-pale);
+      color: var(--green);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.76rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px;
+      margin-bottom: 18px; width: fit-content;
+    }
+
+    .event-title {
+      font-size: 2rem; font-weight: 800;
+      color: var(--green-dk); line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .event-subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--green-lt);
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .event-tagline {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem; font-weight: 600;
+      font-style: italic;
+      color: #2a7a6a;
+      margin-bottom: 24px;
+      padding-left: 14px;
+      border-left: 3px solid var(--green-lt);
+    }
+
+    .event-meta {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-bottom: 28px;
+    }
+    .meta-item {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .meta-item i {
+      color: var(--green); font-size: 1rem;
+      margin-top: 3px; flex-shrink: 0; width: 18px;
+    }
+    .meta-item span {
+      font-size: 0.95rem; color: var(--text-muted); line-height: 1.5;
+    }
+    .meta-item strong { color: var(--text-dark); }
+
+    .event-desc {
+      font-size: 0.92rem; color: var(--text-muted);
+      line-height: 1.75; margin-bottom: 28px;
+    }
+
+    /* Highlights pills */
+    .highlights { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .highlight-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-pale); color: var(--green-dk);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 20px;
+    }
+    .highlight-pill i { font-size: 0.72rem; }
+
+    /* CTA buttons */
+    .event-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-register {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 50px;
+      background: var(--green);
+      color: #fff; font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      box-shadow: 0 6px 20px rgba(45,90,39,0.3);
+      transition: all 0.3s ease;
+    }
+    .btn-register:hover {
+      background: var(--green-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(45,90,39,0.4);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 50px;
+      background: transparent;
+      border: 2px solid var(--green);
+      color: var(--green); font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      background: var(--green-pale);
+      transform: translateY(-2px);
+    }
+
+    /* ── KEY DATES STRIP ── */
+    .dates-strip {
+      background: linear-gradient(135deg, var(--green-dk), var(--green));
+      padding: 60px 6%;
+    }
+    .dates-strip h2 {
+      text-align: center; color: #fff;
+      font-size: 1.7rem; font-weight: 700;
+      margin-bottom: 40px; letter-spacing: -0.3px;
+    }
+    .dates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; max-width: 1100px; margin: 0 auto;
+    }
+    .date-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px; padding: 22px 18px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .date-card:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateY(-4px);
+    }
+    .date-card .d-icon {
+      font-size: 1.6rem; margin-bottom: 10px;
+    }
+    .date-card .d-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); margin-bottom: 8px;
+    }
+    .date-card .d-date {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      color: #fff; line-height: 1.3;
+    }
+    .date-card .d-time {
+      font-size: 0.76rem; color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+    }
+
+    /* ── PARTICIPATION SECTION ── */
+    .participate-section { padding: 80px 6%; background: var(--white); }
+    .section-head { text-align: center; margin-bottom: 50px; }
+    .section-head h2 { font-size: 2.2rem; font-weight: 700; color: var(--green-dk); margin-bottom: 12px; }
+    .section-head p { color: var(--text-muted); font-size: 1rem; max-width: 560px; margin: 0 auto; }
+    .divider-line { width: 52px; height: 3px; background: var(--green); margin: 14px auto 0; border-radius: 2px; }
+
+    .participate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .participate-card {
+      background: var(--green-pale);
+      border-radius: 16px; padding: 36px 32px;
+      border-left: 4px solid var(--green);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .participate-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(45,90,39,0.12); }
+    .participate-card h3 {
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--green-dk); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .participate-card h3 i { color: var(--green-lt); font-size: 1.1rem; }
+    .participate-card ul { display: flex; flex-direction: column; gap: 12px; }
+    .participate-card ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.93rem; color: var(--text-muted);
+    }
+    .participate-card ul li i { color: var(--green); margin-top: 3px; flex-shrink: 0; font-size: 0.8rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111;
+      color: #fff;
+      padding: 28px 6%;
+      text-align: center;
+    }
+    footer p { color: rgba(255,255,255,0.55); font-size: 0.85rem; }
+    footer a { color: var(--green-lt); }
+    footer a:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .event-card { grid-template-columns: 1fr; }
+      .event-poster { min-height: 320px; }
+      .event-details { padding: 36px 28px; }
+      .event-title { font-size: 1.6rem; }
+      .participate-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .page-hero h1 { font-size: 2.1rem; }
+      .event-details { padding: 28px 20px; }
+      .dates-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ek-progress" id="ekProgress"></div>
+
+<!-- NAV -->
+<header class="ek-header" id="ekHeader">
+  <div class="ek-nav">
+    <a href="index.html" class="ek-logo" aria-label="EventsKart Home">
+      <img src="logo.png" alt="EventsKart Logo">
+    </a>
+    <nav>
+      <ul class="ek-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="has-dropdown">
+          <a href="projects.html">Projects <span class="chevron">&#9660;</span></a>
+          <ul class="ek-dropdown">
+            <li><a href="projects.html"><i class="fas fa-folder-open"></i> Our Projects</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
+            <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="ek-cta">Partner With Us <span class="arrow">&#8594;</span></a>
+    <button class="ek-hamburger" id="ekBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="ek-mobile-drawer" id="ekDrawer" role="navigation" aria-label="Mobile menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="projects.html" class="ek-sub-item"><i class="fas fa-folder-open"></i> &nbsp;Our Projects</a>
+    <a href="upcoming-events.html" class="nav-active ek-sub-item"><i class="fas fa-calendar-alt"></i> &nbsp;Upcoming Events</a>
+    <a href="gallery.html" class="ek-sub-item"><i class="fas fa-images"></i> &nbsp;Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="ek-cta-mobile">Partner With Us &#8594;</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="reveal">
+    <span class="eyebrow"><i class="fas fa-calendar-star"></i> Upcoming Events</span>
+    <h1>Our Events</h1>
+    <p>International summits, student programs, and eco-tourism initiatives — shaping a sustainable future.</p>
+  </div>
+</section>
+
+<!-- MAIN EVENT SECTION -->
+<section class="events-section">
+  <div class="container">
+
+    <div class="event-card reveal">
+
+      <!-- Poster -->
+      <div class="event-poster">
+        <span class="poster-badge">&#128197; Oct 2026</span>
+        <img src="bics2026.jpeg" alt="BiCS 2026 — Blue Intelligence Climate Summit">
+      </div>
+
+      <!-- Details -->
+      <div class="event-details">
+        <span class="event-tag"><i class="fas fa-water"></i> International Summit</span>
+        <h2 class="event-title">BiCS 2026</h2>
+        <div class="event-subtitle">Blue Intelligence Climate Summit</div>
+        <p class="event-tagline">"A High-Tech Horizon For A Healthy Ocean!"</p>
+
+        <div class="event-meta">
+          <div class="meta-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span><strong>2<sup>nd</sup> &amp; 3<sup>rd</sup> October 2026</strong></span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span><strong>Radisson Blue Resort</strong>, Visakhapatnam, Andhra Pradesh, India</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-users"></i>
+            <span>Open to <strong>Students (13–25 yrs)</strong> &amp; <strong>Researchers</strong> — Online &amp; Offline</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-globe"></i>
+            <span><strong>1000–1400+ Delegates</strong> from <strong>25+ Countries</strong> expected</span>
+          </div>
+        </div>
+
+        <p class="event-desc">
+          BiCS 2026 unites advanced technology and marine conservation to pioneer data-driven solutions for ocean climate action and a sustainable blue economy. Featuring a Hackathon Pool, Scopus-indexed publications, international panel discussions, and the Visakhapatnam Blue Intelligence Declaration 2026.
+        </p>
+
+        <div class="highlights">
+          <span class="highlight-pill"><i class="fas fa-code"></i> Hackathon Pool</span>
+          <span class="highlight-pill"><i class="fas fa-book"></i> Scopus Publications</span>
+          <span class="highlight-pill"><i class="fas fa-trophy"></i> Cash Awards</span>
+          <span class="highlight-pill"><i class="fas fa-robot"></i> AI &amp; Marine Science</span>
+          <span class="highlight-pill"><i class="fas fa-handshake"></i> High-Value Sponsorships</span>
+          <span class="highlight-pill"><i class="fas fa-fish"></i> SDG 14 Focus</span>
+        </div>
+
+        <div class="event-ctas">
+       
+          <a href="contact.html" class="btn-outline">
+            <i class="fas fa-envelope"></i> Enquire
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KEY DATES STRIP -->
+<section class="dates-strip">
+  <div class="reveal">
+    <h2><i class="fas fa-clock" style="margin-right:10px;opacity:0.7"></i>Important Dates</h2>
+  </div>
+  <div class="dates-grid reveal">
+    <div class="date-card">
+      <div class="d-icon">📋</div>
+      <div class="d-label">Applications Open</div>
+      <div class="d-date">27<sup>th</sup> May 2026</div>
+    </div>
+    <div class="date-card">
+      <div class="d-icon">🐦</div>
+      <div class="d-label">Early Bird Registration</div>
+      <div class="d-date">19<sup>th</sup> June 2026</div>
+      <div class="d-time">9 pm IST / 11.30 am NYT</div>
+    </div>
+    <div class="date-card">
+      <div class="d-icon">✍️</div>
+      <div class="d-label">Final Registration</div>
+      <div class="d-date">10<sup>th</sup> July 2026</div>
+      <div class="d-time">9 pm IST / 11.30 am NYT</div>
+    </div>
+    <div class="date-card">
+      <div class="d-icon">📄</div>
+      <div class="d-label">Abstract Submission</div>
+      <div class="d-date">3<sup>rd</sup> August 2026</div>
+      <div class="d-time">9 pm IST / 11.30 am NYT</div>
+    </div>
+    <div class="date-card">
+      <div class="d-icon">⏰</div>
+      <div class="d-label">Late Fee Abstract</div>
+      <div class="d-date">22<sup>nd</sup> August 2026</div>
+      <div class="d-time">9 pm IST / 11.30 am NYT</div>
+    </div>
+    <div class="date-card">
+      <div class="d-icon">🌊</div>
+      <div class="d-label">Event Dates</div>
+      <div class="d-date">2<sup>nd</sup> – 3<sup>rd</sup> Oct 2026</div>
+      <div class="d-time">Visakhapatnam, India</div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTICIPATION -->
+<section class="participate-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Who Can Participate?</h2>
+      <p>Two categories open to students and researchers from across the globe.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="participate-grid reveal">
+      <div class="participate-card">
+        <h3><i class="fas fa-user-graduate"></i> Students</h3>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Age 13–17 years — <strong>Online participation</strong></li>
+          <li><i class="fas fa-check-circle"></i> Age 18–25 years — <strong>Offline (on-site) participation</strong></li>
+          <li><i class="fas fa-check-circle"></i> Hackathon tracks &amp; Innovation Forum</li>
+          <li><i class="fas fa-check-circle"></i> Surprise Cash Awards for top projects</li>
+          <li><i class="fas fa-check-circle"></i> Scopus-indexed publication opportunities</li>
+        </ul>
+      </div>
+      <div class="participate-card">
+        <h3><i class="fas fa-microscope"></i> Researchers</h3>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Open to academic &amp; industry researchers</li>
+          <li><i class="fas fa-check-circle"></i> Keynote &amp; plenary session slots</li>
+          <li><i class="fas fa-check-circle"></i> Paper presentations &amp; panel discussions</li>
+          <li><i class="fas fa-check-circle"></i> Research Category Cash Awards</li>
+          <li><i class="fas fa-check-circle"></i> Fast-tracked journal publications (Marine Policy, Applied Ocean Research)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 EventsKart. All Rights Reserved. &nbsp;|&nbsp; <a href="contact.html">Contact Us</a> &nbsp;|&nbsp; </p>
+</footer>
+
+<!-- Reveal on scroll -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var obs = new IntersectionObserver(function (entries, o) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('active'); o.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (r) { obs.observe(r); });
+  });
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
