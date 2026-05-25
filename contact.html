@@ -101,7 +101,7 @@
 <header class="ek-header" id="ekHeader">
   <div class="ek-nav">
     <a href="index.html" class="ek-logo" aria-label="EventsKart Home">
-      <img src="https://z-cdn-media.chatglm.cn/files/b8b684f3-d586-4d3a-9133-ae6a853b2142.png?auth_key=1879547656-0a7b23a043374e92baf6a9bf11778bf6-0-18f697a87e3ac264b79e5e6a378a5a5d" alt="EventsKart Logo">
+      <img src="logo.png" alt="EventsKart Logo">
     </a>
     <nav>
       <ul class="ek-links" role="list">
@@ -191,6 +191,11 @@
             <label for="lastName">Last Name <span class="req">*</span></label>
             <input type="text" id="lastName" name="LastName" placeholder="Last name" required>
           </div>
+        </div>
+
+        <div class="form-group" style="margin-top:22px">
+          <label for="designation">Your Role / Designation <span class="req">*</span></label>
+          <input type="text" id="designation" name="Designation" placeholder="e.g. Principal, Teacher, Student, Manager" required>
         </div>
 
         <div class="form-group" style="margin-top:22px">
@@ -295,7 +300,7 @@
 (function () {
   'use strict';
 
-  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRaRpXP_7f1AqdWj2RDidLsAVaI981cHm2nSfb0ZwgHX2kPtPOEIg-KJy_hx1DS2LT/exec';
+  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2JoWVNFO7f2pO7HMy08GR94nvFSMx8lSG8PBzStL_LOOoh3VwDmlllCwtHspGLE11/exec';
 
   var form      = document.getElementById('contactForm');
   var submitBtn = document.getElementById('submitBtn');
@@ -335,6 +340,7 @@
 
     var firstName   = document.getElementById('firstName').value.trim();
     var lastName    = document.getElementById('lastName').value.trim();
+    var designation = document.getElementById('designation').value.trim();
     var whatsapp    = document.getElementById('whatsappName').value.trim();
     var email       = document.getElementById('email').value.trim();
     var isdCode     = document.getElementById('isdCode').value;
@@ -348,6 +354,7 @@
     /* Validation */
     if (!firstName)  { showError('Please enter your first name.',      document.getElementById('firstName'));   return; }
     if (!lastName)   { showError('Please enter your last name.',       document.getElementById('lastName'));    return; }
+    if (!designation){ showError('Please enter your role / designation.', document.getElementById('designation')); return; }
     if (!whatsapp)   { showError('Please enter your WhatsApp number.',   document.getElementById('whatsappName')); return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.', document.getElementById('email')); return; }
     if (!mobile)     { showError('Please enter your mobile number.',   document.getElementById('mobile'));      return; }
@@ -364,6 +371,7 @@
       timestamp  : new Date().toLocaleString(),
       firstName  : firstName,
       lastName   : lastName,
+      designation: designation,
       whatsapp   : isdCode + ' ' + whatsapp,
       email      : email,
       mobile     : isdCode + ' ' + mobile,
