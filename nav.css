@@ -40,7 +40,7 @@
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 6%;
-  height: 72px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,12 +54,12 @@
   flex-shrink: 0;
 }
 .ek-logo img {
-  height: 46px;
+  height: 60px;
   width: auto;
   display: block;
-  transition: transform 0.3s ease;
+  transition: opacity 0.25s ease;
 }
-.ek-logo:hover img { transform: scale(1.04); }
+.ek-logo:hover img { opacity: 0.82; }
 
 /* ---- Desktop Nav Links ---- */
 .ek-links {
@@ -75,7 +75,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 72px; /* match nav height so hover zone covers full bar */
+  height: 80px; /* match nav height so hover zone covers full bar */
 }
 
 .ek-links a {
